@@ -51,16 +51,10 @@ class TabTeacher(ft.Tab):
                 expand=True,
                 controls=[
                     ft.Row(
-                        [
-                            ft.Row(
-                                controls=[
-                                    self.search_prof,
-                                    FlatButton(languages[lang]['search'], 'filter_alt_off_outlined', None, None),
-                                    self.prof_id
-                                ]
-                            ),
-
-                        ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                        controls=[
+                            self.search_prof,
+                            self.prof_id
+                        ]
                     ),
                     ft.Column(
                         expand=True, scroll=ft.ScrollMode.AUTO,
@@ -275,13 +269,13 @@ class TabTeacher(ft.Tab):
         """
         window_to_hide.scale = 0
 
-        self.cp.left_menu.disabled = False
-        self.cp.top_menu.disabled = False
+        self.cp.cp.left_menu.disabled = False
+        self.cp.cp.top_menu.disabled = False
         self.main_window.disabled = False
-        self.cp.left_menu.opacity = 1
-        self.cp.top_menu.opacity = 1
+        self.cp.cp.left_menu.opacity = 1
+        self.cp.cp.top_menu.opacity = 1
         self.main_window.opacity = 1
-        self.cp.page.update()
+        self.cp.cp.page.update()
 
     def show_one_window(self, window_to_show):
         """
@@ -291,13 +285,13 @@ class TabTeacher(ft.Tab):
         """
         window_to_show.scale = 1
 
-        self.cp.left_menu.disabled = True
-        self.cp.top_menu.disabled = True
+        self.cp.cp.left_menu.disabled = True
+        self.cp.cp.top_menu.disabled = True
         self.main_window.disabled = True
-        self.cp.left_menu.opacity = 0.3
-        self.cp.top_menu.opacity = 0.3
+        self.cp.cp.left_menu.opacity = 0.3
+        self.cp.cp.top_menu.opacity = 0.3
         self.main_window.opacity = 0.3
-        self.cp.page.update()
+        self.cp.cp.page.update()
 
     @staticmethod
     def run_async_in_thread(coro):

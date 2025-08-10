@@ -728,17 +728,17 @@ class Teachers(ft.Container):
                                         controls=[
                                             ft.Text(languages[lang]['teacher'], size=11, font_family='PPM', color='grey'),
                                             self.head_teacher_name,
-                                        ]
+                                        ], spacing=2
                                     ),
                                     ft.Column(
                                         controls=[
                                             ft.Text(languages[lang]['class'], size=11, font_family='PPM',
                                                     color='grey'),
                                             self.head_class_name,
-                                        ]
+                                        ], spacing=2
                                     ),
                                     ft.Container(
-                                        padding=ft.padding.only(10, 0, 10, 0),
+                                        padding=10,
                                         content=ft.Row(
                                             [
                                                 MyButton(

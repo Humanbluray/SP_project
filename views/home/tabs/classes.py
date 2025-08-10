@@ -276,13 +276,13 @@ class Classes(ft.Container):
                 content=ft.Column(
                     controls=[
                         ft.Container(
-                            bgcolor="black", padding=20, border=ft.border.only(bottom=ft.BorderSide(1, CT_BORDER_COLOR)),
+                            bgcolor="white", padding=20, border=ft.border.only(bottom=ft.BorderSide(1, CT_BORDER_COLOR)),
                             border_radius=ft.border_radius.only(top_left=16, top_right=16),
                             content=ft.Row(
                                 controls=[
-                                    ft.Text(languages[lang]['new class'], size=16, font_family='PPB', color=BASE_COLOR),
+                                    ft.Text(languages[lang]['new class'], size=16, font_family='PPB'),
                                     ft.IconButton(
-                                        'close', icon_color='black87', bgcolor=BASE_COLOR, scale=0.7,
+                                        'close', icon_color='black87', bgcolor='#f0f0f6', scale=0.7,
                                         on_click=self.close_new_class_window
                                     ),
                                 ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN

@@ -43,15 +43,7 @@ class TabClasses(ft.Tab):
                 controls=[
                     ft.Row(
                         [
-                            ft.Row(
-                                controls=[
-                                    self.search_class,
-                                    ColoredIconButton(
-                                        ft.Icons.FILTER_ALT_OFF_OUTLINED, '', 'black', 'grey50',
-                                        None
-                                    ),
-                                ]
-                            ),
+                            self.search_class,
                             self.check_class_button
 
                         ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
@@ -196,9 +188,9 @@ class TabClasses(ft.Tab):
             **cool_style, prefix_icon='roofing', width=180, read_only=True
         )
         self.det_progress_bar = ft.ProgressBar(
-            width=140, border_radius=16, height=15,
+            color=BASE_COLOR, bgcolor='#f0f0f6', width=150, height=10, border_radius=16,
         )
-        self.det_percent = ft.Text(size=16, font_family='PPB')
+        self.det_percent = ft.Text(size=16, font_family='PPL')
         self.det_table = ft.DataTable(
             **datatable_style, columns=[
                 ft.DataColumn(
@@ -272,7 +264,12 @@ class TabClasses(ft.Tab):
                                                     self.det_class
                                                 ], spacing=2
                                             ),
-                                            ft.Row([self.det_progress_bar, self.det_percent])
+                                            ft.Column(
+                                                [
+                                                    ft.Text(languages[lang]['affectations state'], size=12, font_family='PPM', color='grey'),
+                                                    ft.Row([self.det_progress_bar, self.det_percent])
+                                                ], spacing=2
+                                            )
                                         ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                                         vertical_alignment=ft.CrossAxisAlignment.END
                                     ),
@@ -305,13 +302,13 @@ class TabClasses(ft.Tab):
         """
         window_to_hide.scale = 0
 
-        self.cp.left_menu.disabled = False
-        self.cp.top_menu.disabled = False
+        self.cp.cp.left_menu.disabled = False
+        self.cp.cp.top_menu.disabled = False
         self.main_window.disabled = False
-        self.cp.left_menu.opacity = 1
-        self.cp.top_menu.opacity = 1
+        self.cp.cp.left_menu.opacity = 1
+        self.cp.cp.top_menu.opacity = 1
         self.main_window.opacity = 1
-        self.cp.page.update()
+        self.cp.cp.page.update()
 
     def show_one_window(self, window_to_show):
         """
@@ -321,13 +318,13 @@ class TabClasses(ft.Tab):
         """
         window_to_show.scale = 1
 
-        self.cp.left_menu.disabled = True
-        self.cp.top_menu.disabled = True
+        self.cp.cp.left_menu.disabled = True
+        self.cp.cp.top_menu.disabled = True
         self.main_window.disabled = True
-        self.cp.left_menu.opacity = 0.3
-        self.cp.top_menu.opacity = 0.3
+        self.cp.cp.left_menu.opacity = 0.3
+        self.cp.cp.top_menu.opacity = 0.3
         self.main_window.opacity = 0.3
-        self.cp.page.update()
+        self.cp.cp.page.update()
 
     @staticmethod
     def run_async_in_thread(coro):
@@ -579,14 +576,16 @@ class TabClasses(ft.Tab):
             total_affected += detail["nombre_affectations"]
 
             if detail['hourly load'] > detail["nombre_affectations"]:
-                status_icon = None
+                status_icon = ft.Icons.INFO_OUTLINE_ROUNDED
+                status_color = 'red'
             else:
                 status_icon = ft.Icons.CHECK_CIRCLE
+                status_color = 'teal'
 
             self.det_table.rows.append(
                 ft.DataRow(
                     cells=[
-                        ft.DataCell(ft.Icon(status_icon, color='teal', size=16)),
+                        ft.DataCell(ft.Icon(status_icon, color=status_color, size=16)),
                         ft.DataCell(ft.Text(detail['short_name'].upper())),
                         ft.DataCell(ft.Text(detail['hourly load'])),
                         ft.DataCell(ft.Text(detail['nombre_affectations']))
