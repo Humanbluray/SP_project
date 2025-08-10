@@ -51,16 +51,10 @@ class TabTeacher(ft.Tab):
                 expand=True,
                 controls=[
                     ft.Row(
-                        [
-                            ft.Row(
-                                controls=[
-                                    self.search_prof,
-                                    FlatButton(languages[lang]['search'], 'filter_alt_off_outlined', None, None),
-                                    self.prof_id
-                                ]
-                            ),
-
-                        ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                        controls=[
+                            self.search_prof,
+                            self.prof_id
+                        ]
                     ),
                     ft.Column(
                         expand=True, scroll=ft.ScrollMode.AUTO,
@@ -266,6 +260,38 @@ class TabTeacher(ft.Tab):
             ], alignment=ft.alignment.center
         )
         self.on_mount()
+
+    def hide_one_window(self, window_to_hide: object):
+        """
+        This function helps to make menus clickable
+        :param window_to_hide:
+        :return:
+        """
+        window_to_hide.scale = 0
+
+        self.cp.cp.left_menu.disabled = False
+        self.cp.cp.top_menu.disabled = False
+        self.main_window.disabled = False
+        self.cp.cp.left_menu.opacity = 1
+        self.cp.cp.top_menu.opacity = 1
+        self.main_window.opacity = 1
+        self.cp.cp.page.update()
+
+    def show_one_window(self, window_to_show):
+        """
+        This function helps to make menus non-clickable
+        :param window_to_show:
+        :return:
+        """
+        window_to_show.scale = 1
+
+        self.cp.cp.left_menu.disabled = True
+        self.cp.cp.top_menu.disabled = True
+        self.main_window.disabled = True
+        self.cp.cp.left_menu.opacity = 0.3
+        self.cp.cp.top_menu.opacity = 0.3
+        self.main_window.opacity = 0.3
+        self.cp.cp.page.update()
 
     @staticmethod
     def run_async_in_thread(coro):
@@ -486,12 +512,7 @@ class TabTeacher(ft.Tab):
                 ).eq('day', self.new_day.value).eq('slot', self.new_slot.value).eq(
                     "class_id", self.new_class.value).eq('year_id', self.year_id).execute()
 
-                self.new_affectation_window.scale = 0
-                self.main_window.opacity = 1
-                self.main_window.disabled = False
-                self.cp.cp.left_menu.opacity = 1
-                self.cp.cp.left_menu.disabled = False
-                self.cp.page.update()
+                self.hide_one_window(self.new_affectation_window)
 
                 self.cp.cp.box.title.value = languages[self.cp.lang]['success']
                 self.cp.cp.box.content.value = languages[self.cp.lang]['successful assignment']
@@ -550,20 +571,8 @@ class TabTeacher(ft.Tab):
 
     def close_new_affectation_window(self, e):
         self.new_subject.value = " "
-        self.new_subject.update()
-
         self.new_class.value = " "
-        self.new_class.update()
-
-        self.new_affectation_window.scale = 0
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.cp.left_menu.opacity = 1
-        self.cp.cp.left_menu.disabled = False
-        self.new_subject.options.clear()
-        self.check_validity.name = None
-        self.check_validity_load.name = None
-        self.cp.page.update()
+        self.hide_one_window(self.new_affectation_window)
 
     def open_multi_affectation_window(self, e):
         count_checked = 0

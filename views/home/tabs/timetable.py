@@ -1,9 +1,4 @@
-import flet as ft
-from components import MyButton, MyIconButton, MyMiniIcon, ColoredIcon
-from utils.styles import search_style, drop_style, login_style, other_style, datatable_style
 from utils.couleurs import *
-from translations.translations import languages
-import os, mimetypes, asyncio
 from services.async_functions.students_functions import get_current_year_label
 from views.home.tabs.undertabs.tab_teacher import TabTeacher
 from views.home.tabs.undertabs.tab_classes import TabClasses

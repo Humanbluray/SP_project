@@ -276,13 +276,13 @@ class Classes(ft.Container):
                 content=ft.Column(
                     controls=[
                         ft.Container(
-                            bgcolor="black", padding=20, border=ft.border.only(bottom=ft.BorderSide(1, CT_BORDER_COLOR)),
+                            bgcolor="white", padding=20, border=ft.border.only(bottom=ft.BorderSide(1, CT_BORDER_COLOR)),
                             border_radius=ft.border_radius.only(top_left=16, top_right=16),
                             content=ft.Row(
                                 controls=[
-                                    ft.Text(languages[lang]['new class'], size=16, font_family='PPB', color=BASE_COLOR),
+                                    ft.Text(languages[lang]['new class'], size=16, font_family='PPB'),
                                     ft.IconButton(
-                                        'close', icon_color='black87', bgcolor=BASE_COLOR, scale=0.7,
+                                        'close', icon_color='black87', bgcolor='#f0f0f6', scale=0.7,
                                         on_click=self.close_new_class_window
                                     ),
                                 ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
@@ -472,6 +472,38 @@ class Classes(ft.Container):
         )
         self.on_mount()
 
+    def hide_one_window(self, window_to_hide: object):
+        """
+        This function helps to make menus clickable
+        :param window_to_hide:
+        :return:
+        """
+        window_to_hide.scale = 0
+
+        self.cp.left_menu.disabled = False
+        self.cp.top_menu.disabled = False
+        self.main_window.disabled = False
+        self.cp.left_menu.opacity = 1
+        self.cp.top_menu.opacity = 1
+        self.main_window.opacity = 1
+        self.cp.page.update()
+
+    def show_one_window(self, window_to_show):
+        """
+        This function helps to make menus non-clickable
+        :param window_to_show:
+        :return:
+        """
+        window_to_show.scale = 1
+
+        self.cp.left_menu.disabled = True
+        self.cp.top_menu.disabled = True
+        self.main_window.disabled = True
+        self.cp.left_menu.opacity = 0.3
+        self.cp.top_menu.opacity = 0.3
+        self.main_window.opacity = 0.3
+        self.cp.page.update()
+
     @staticmethod
     def run_async_in_thread(coro):
         def runner():
@@ -627,14 +659,7 @@ class Classes(ft.Container):
 
     def open_new_class_window(self, e):
         if self.cp.page.client_storage.get("role") in ['principal', 'préfet']:
-            self.new_class_window.scale = 1
-            self.new_class_window.update()
-            self.main_window.opacity = 0.3
-            self.main_window.disabled = True
-            self.main_window.update()
-            self.cp.left_menu.opacity = 0.3
-            self.cp.left_menu.disabled = True
-            self.cp.left_menu.update()
+            self.show_one_window(self.new_class_window)
         else:
             self.cp.box.title.value = languages[self.lang]['error']
             self.cp.box.content.value = languages[self.lang]['error rights']
@@ -642,14 +667,7 @@ class Classes(ft.Container):
             self.cp.box.update()
 
     def close_new_class_window(self, e):
-        self.new_class_window.scale = 0
-        self.new_class_window.update()
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.main_window.update()
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.left_menu.update()
+        self.hide_one_window(self.new_class_window)
 
     def add_new_class(self, e):
         count = 0
@@ -764,24 +782,13 @@ class Classes(ft.Container):
                 )
             )
 
-        # Affichage
-        self.st_details_window.scale = 1
-        self.main_window.opacity = 0.3
-        self.main_window.disabled = True
-        self.cp.left_menu.opacity = 0.3
-        self.cp.left_menu.disabled = True
-        self.cp.page.update()
+        self.show_one_window(self.st_details_window)
 
     def show_class_details(self, e):
         self.run_async_in_thread(self.open_details_window(e))
 
     def close_details_window(self, e):
-        self.st_details_window.scale = 0
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.page.update()
+        self.hide_one_window(self.st_details_window)
 
 
 

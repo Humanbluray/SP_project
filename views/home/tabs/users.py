@@ -221,6 +221,38 @@ class Users(ft.Container):
         )
         self.on_mount()
 
+    def hide_one_window(self, window_to_hide: object):
+        """
+        This function helps to make menus clickable
+        :param window_to_hide:
+        :return:
+        """
+        window_to_hide.scale = 0
+
+        self.cp.left_menu.disabled = False
+        self.cp.top_menu.disabled = False
+        self.main_window.disabled = False
+        self.cp.left_menu.opacity = 1
+        self.cp.top_menu.opacity = 1
+        self.main_window.opacity = 1
+        self.cp.page.update()
+
+    def show_one_window(self, window_to_show):
+        """
+        This function helps to make menus non-clickable
+        :param window_to_show:
+        :return:
+        """
+        window_to_show.scale = 1
+
+        self.cp.left_menu.disabled = True
+        self.cp.top_menu.disabled = True
+        self.main_window.disabled = True
+        self.cp.left_menu.opacity = 0.3
+        self.cp.top_menu.opacity = 0.3
+        self.main_window.opacity = 0.3
+        self.cp.page.update()
+
     @staticmethod
     def run_async_in_thread(coro):
         def runner():
@@ -298,24 +330,10 @@ class Users(ft.Container):
         self.cp.page.update()
 
     def open_new_user_window(self, e):
-        self.new_user_container.scale = 1
-        self.new_user_container.update()
-        self.main_window.opacity = 0.3
-        self.main_window.disabled = True
-        self.main_window.update()
-        self.cp.left_menu.opacity = 0.3
-        self.cp.left_menu.disabled = True
-        self.cp.left_menu.update()
+        self.show_one_window(self.new_user_container)
 
     def close_new_user_window(self, e):
-        self.new_user_container.scale = 0
-        self.new_user_container.update()
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.main_window.update()
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.left_menu.update()
+        self.hide_one_window(self.new_user_container)
 
         for widget in (self.new_name, self.new_surname, self.new_function, self.new_contact,
                        self.new_email, self.new_role):

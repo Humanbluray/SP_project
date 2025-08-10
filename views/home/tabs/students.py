@@ -1033,6 +1033,38 @@ class Students(ft.Container):
         )
         self.on_mount()
 
+    def hide_one_window(self, window_to_hide: object):
+        """
+        This function helps to make menus clickable
+        :param window_to_hide:
+        :return:
+        """
+        window_to_hide.scale = 0
+
+        self.cp.left_menu.disabled = False
+        self.cp.top_menu.disabled = False
+        self.main_window.disabled = False
+        self.cp.left_menu.opacity = 1
+        self.cp.top_menu.opacity = 1
+        self.main_window.opacity = 1
+        self.cp.page.update()
+
+    def show_one_window(self, window_to_show):
+        """
+        This function helps to make menus non-clickable
+        :param window_to_show:
+        :return:
+        """
+        window_to_show.scale = 1
+
+        self.cp.left_menu.disabled = True
+        self.cp.top_menu.disabled = True
+        self.main_window.disabled = True
+        self.cp.left_menu.opacity = 0.3
+        self.cp.top_menu.opacity = 0.3
+        self.main_window.opacity = 0.3
+        self.cp.page.update()
+
     @staticmethod
     def run_async_in_thread(coro):
         def runner():
@@ -1257,14 +1289,7 @@ class Students(ft.Container):
     def open_new_student_container(self, e):
         role = self.cp.page.client_storage.get('role')
         if role in ['secrétaire', 'économe']:
-            self.ct_new_student.scale = 1
-            self.ct_new_student.update()
-            self.main_window.opacity = 0.3
-            self.main_window.disabled = True
-            self.main_window.update()
-            self.cp.left_menu.opacity = 0.3
-            self.cp.left_menu.disabled = True
-            self.cp.left_menu.update()
+            self.show_one_window(self.ct_new_student)
         else:
             self.cp.box.title.value = languages[self.lang]['error']
             self.cp.box.content.value = languages[self.lang]['error rights']
@@ -1272,26 +1297,12 @@ class Students(ft.Container):
             self.cp.box.update()
 
     def close_new_student_container(self, e):
-        self.ct_new_student.scale = 0
-        self.ct_new_student.update()
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.main_window.update()
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.left_menu.update()
+        self.hide_one_window(self.ct_new_student)
 
     def open_ct_registrations(self, e):
         role = self.cp.page.client_storage.get('role')
         if role in ['secrétaire', 'économe']:
-            self.main_window.opacity = 0.3
-            self.main_window.disabled = True
-            self.main_window.update()
-            self.cp.left_menu.opacity = 0.3
-            self.cp.left_menu.disabled = True
-            self.cp.left_menu.update()
-            self.ct_registration.scale = 1
-            self.ct_registration.update()
+            self.show_one_window(self.ct_registration)
         else:
             self.cp.box.title.value = languages[self.lang]['error']
             self.cp.box.content.value = languages[self.lang]['error rights']
@@ -1299,14 +1310,7 @@ class Students(ft.Container):
             self.cp.box.update()
 
     def close_ct_registrations(self, e):
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.main_window.update()
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.left_menu.update()
-        self.ct_registration.scale = 0
-        self.ct_registration.update()
+        self.hide_one_window(self.ct_registration)
 
     async def load_unregistered_students(self):
         access_token = self.cp.page.client_storage.get("access_token")
@@ -1391,14 +1395,7 @@ class Students(ft.Container):
             self.cp.box.update()
 
     def close_ct_edit_student(self, e):
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.main_window.update()
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.left_menu.update()
-        self.ct_edit_student.scale = 0
-        self.ct_edit_student.update()
+        self.hide_one_window(self.ct_edit_student)
 
     def open_edit_window(self, e):
         self.edit_id_student = e.control.data['student_id']
@@ -1426,14 +1423,8 @@ class Students(ft.Container):
         ):
             widget.update()
 
-        self.main_window.opacity = 0.3
-        self.main_window.disabled = True
-        self.main_window.update()
-        self.cp.left_menu.opacity = 0.3
-        self.cp.left_menu.disabled = True
-        self.cp.left_menu.update()
-        self.ct_edit_student.scale = 1
-        self.ct_edit_student.update()
+        self.show_one_window( self.ct_edit_student)
+
 
     def set_image_url(self, e):
         if e.files:
@@ -1498,15 +1489,7 @@ class Students(ft.Container):
 
                 self.on_mount()
 
-                # Display the page
-                self.main_window.opacity = 1
-                self.main_window.disabled = False
-                self.main_window.update()
-                self.cp.left_menu.opacity = 1
-                self.cp.left_menu.disabled = False
-                self.cp.left_menu.update()
-                self.ct_edit_student.scale = 0
-                self.ct_edit_student.update()
+                self.hide_one_window(self.ct_edit_student)
 
             except Exception as e:
                 self.cp.box.title.value = languages[self.lang]['error']
@@ -1706,11 +1689,7 @@ class Students(ft.Container):
         self.run_async_in_thread(self.valider_inscription(e))
 
     async def load_fees_widgets(self, e):
-        self.main_window.opacity = 0.3
-        self.main_window.disabled = True
-        self.cp.left_menu.opacity = 0.3
-        self.cp.left_menu.disabled = True
-        self.school_fees_window.scale = 1
+        self.show_one_window(self.school_fees_window)
 
         total_payments = await get_student_payments_for_active_year(self.cp.page.client_storage.get('access_token'), e.control.data['student_id'])
         total_paid = sum(item['amount'] for item in total_payments)
@@ -1768,15 +1747,7 @@ class Students(ft.Container):
         self.run_async_in_thread(self.load_fees_widgets(e))
 
     def close_school_fees_window(self, e):
-        self.school_fees_window.opacity = 1
-        self.main_window.disabled = False
-        self.main_window.update()
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.left_menu.update()
-        self.school_fees_window.scale = 0
-        self.school_fees_window.update()
-        self.cp.page.update()
+        self.hide_one_window(self.school_fees_window)
 
     def make_a_payment(self, e):
         role = self.cp.page.client_storage.get('role')
@@ -1881,12 +1852,7 @@ class Students(ft.Container):
         role = self.cp.page.client_storage.get('role')
 
         if role in ['secrétaire', "économe"]:
-            self.main_window.opacity = 0.3
-            self.main_window.disabled = True
-            self.cp.left_menu.opacity = 0.3
-            self.cp.left_menu.disabled = True
-            self.discipline_window.scale = 1
-            self.cp.page.update()
+            self.show_one_window(self.discipline_window)
 
         else:
             self.cp.box.title.value = languages[self.lang]['error']
@@ -1895,11 +1861,7 @@ class Students(ft.Container):
             self.cp.box.update()
 
     def close_discipline_window(self, e):
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.discipline_window.scale = 0
+        self.hide_one_window(self.discipline_window)
 
         self.dis_student.options.clear()
         self.dis_student.options.append(

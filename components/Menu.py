@@ -79,7 +79,6 @@ class NavBar(ft.Container):
                             ], alignment=ft.MainAxisAlignment.CENTER
                         ),
                         ft.Divider(height=1, color=ft.Colors.TRANSPARENT),
-                        ft.Divider(height=1, thickness=1),
                         ft.Container(
                             padding=ft.padding.only(20, 0, 20, 0), expand=True,
                             content=ft.Column(

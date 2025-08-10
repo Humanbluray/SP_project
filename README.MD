@@ -38,8 +38,7 @@ School Pilot fournit une interface intuitive pour gérer toutes les données d�
 
 ---
 
-## 🛠 Technologies utilisées
-
+## 🛠 Technologies utilisée
 - **Langage** : Python 3.13
 - **Framework UI** : [Flet](https://flet.dev)
 - **Base de données** : [Supabase](https://supabase.com)

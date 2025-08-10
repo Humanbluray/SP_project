@@ -583,6 +583,38 @@ class Years(ft.Container):
         )
         self.on_mount()
 
+    def hide_one_window(self, window_to_hide: object):
+        """
+        This function helps to make menus clickable
+        :param window_to_hide:
+        :return:
+        """
+        window_to_hide.scale = 0
+
+        self.cp.left_menu.disabled = False
+        self.cp.top_menu.disabled = False
+        self.main_window.disabled = False
+        self.cp.left_menu.opacity = 1
+        self.cp.top_menu.opacity = 1
+        self.main_window.opacity = 1
+        self.cp.page.update()
+
+    def show_one_window(self, window_to_show):
+        """
+        This function helps to make menus non-clickable
+        :param window_to_show:
+        :return:
+        """
+        window_to_show.scale = 1
+
+        self.cp.left_menu.disabled = True
+        self.cp.top_menu.disabled = True
+        self.main_window.disabled = True
+        self.cp.left_menu.opacity = 0.3
+        self.cp.top_menu.opacity = 0.3
+        self.main_window.opacity = 0.3
+        self.cp.page.update()
+
     @staticmethod
     def run_async_in_thread(coro):
         def runner():
@@ -758,7 +790,6 @@ class Years(ft.Container):
     async def load_sequence_informations_normally(self):
         access_token = self.cp.page.client_storage.get('access_token')
         active_sequence = await get_active_sequence(access_token)
-        active_quarter = await get_active_quarter(access_token)
 
         next_seq_dict = {
             'sequence 1': 'sequence 2',
@@ -810,7 +841,6 @@ class Years(ft.Container):
             self.cp.box.open = True
             self.cp.box.update()
 
-
         else:
             pass
 
@@ -818,32 +848,10 @@ class Years(ft.Container):
         self.run_async_in_thread(self.load_sequence_informations_normally())
 
     def close_generation_window(self, e):
-        self.generation_window.scale = 0
-
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-
-        # désactiver les menus
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.top_menu.opacity = 1
-        self.cp.top_menu.disabled = False
-
-        self.cp.page.update()
+        self.hide_one_window(self.generation_window)
 
     def open_generation_window(self, e):
-        self.generation_window.scale = 1
-
-        self.main_window.opacity = 0.3
-        self.main_window.disabled = True
-
-        # désactiver les menus
-        self.cp.left_menu.opacity = 0.3
-        self.cp.left_menu.disabled = True
-        self.cp.top_menu.opacity = 0.3
-        self.cp.top_menu.disabled = True
-
-        self.cp.page.update()
+        self.show_one_window(self.generation_window)
 
     def close_check_sequence_window(self, e):
         self.report_book_container.visible = False
@@ -855,43 +863,22 @@ class Years(ft.Container):
         self.class_checked.value = '-'
         self.check_table.rows.clear()
         self.nb_missing.value = '0'
-        self.check_sequence_window.scale = 0
-
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-
-        # désactiver les menus
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.top_menu.opacity = 1
-        self.cp.top_menu.disabled = False
-
-        self.cp.page.update()
+        self.hide_one_window(self.check_sequence_window)
 
     def open_check_sequence_window(self, e):
         self.run_async_in_thread(self.load_checking(e))
 
     async def load_checking(self, e):
-        self.check_sequence_window.scale = 1
         self.check_table.rows.clear()
         self.check_status.value = '0 %'
         self.class_checked.value = '-'
         self.check_notes_bar.value = 0
-
-        # désactiver les menus
-        self.main_window.opacity = 0.3
-        self.main_window.disabled = True
-        self.cp.left_menu.opacity = 0.3
-        self.cp.left_menu.disabled = True
-        self.cp.top_menu.opacity = 0.3
-        self.cp.top_menu.disabled = True
-        self.cp.page.update()
-
+        self.show_one_window(self.check_sequence_window)
 
         # on définit quelques variables qui nous seront utiles...
         access_token = self.cp.page.client_storage.get('access_token')
         year_id = self.cp.year_id
-        sequence = self.cp.active_sequance.data
+        sequence = self.cp.active_sequence.data
 
         # liste des notes manquantes
         missing_list: list = []
@@ -1115,50 +1102,18 @@ class Years(ft.Container):
         self.new_year_short.value = new_year_short
 
         # open window...
-        self.generation_window.scale = 0
-        self.new_year_informations_window.scale = 1
-        self.main_window.opacity = 0.3
-        self.main_window.disabled = True
-
-        # désactiver les menus
-        self.cp.left_menu.opacity = 0.3
-        self.cp.left_menu.disabled = True
-        self.cp.top_menu.opacity = 0.3
-        self.cp.top_menu.disabled = True
-
-        self.cp.page.update()
+        self.hide_one_window(self.generation_window)
+        self.show_one_window(self.new_year_informations_window)
 
     def close_new_year_infos_window(self, e):
-        self.new_year_informations_window.scale = 0
-
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-
-        # désactiver les menus
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.top_menu.opacity = 1
-        self.cp.top_menu.disabled = False
-
-        self.cp.page.update()
+        self.hide_one_window(self.check_sequence_window)
 
     def open_final_window(self, e):
         self.run_async_in_thread(self.load_final_window(e))
 
     async def load_final_window(self, e):
-        self.final_window.scale = 1
-
-        self.main_window.opacity = 0.3
-        self.main_window.disabled = True
-        self.new_year_informations_window.scale = 0
-
-        # désactiver les menus
-        self.cp.left_menu.opacity = 0.3
-        self.cp.left_menu.disabled = True
-        self.cp.top_menu.opacity = 0.3
-        self.cp.top_menu.disabled = True
-
-        self.cp.page.update()
+        self.hide_one_window(self.new_year_informations_window)
+        self.show_one_window(self.final_window)
 
         year_id = self.cp.year_id
         access_token = self.cp.page.client_storage.get('access_token')
