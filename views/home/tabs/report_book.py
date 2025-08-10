@@ -332,6 +332,38 @@ class ReportBook(ft.Container):
         )
         self.on_mount()
 
+    def hide_one_window(self, window_to_hide: object):
+        """
+        This function helps to make menus clickable
+        :param window_to_hide:
+        :return:
+        """
+        window_to_hide.scale = 0
+
+        self.cp.left_menu.disabled = False
+        self.cp.top_menu.disabled = False
+        self.main_window.disabled = False
+        self.cp.left_menu.opacity = 1
+        self.cp.top_menu.opacity = 1
+        self.main_window.opacity = 1
+        self.cp.page.update()
+
+    def show_one_window(self, window_to_show):
+        """
+        This function helps to make menus non-clickable
+        :param window_to_show:
+        :return:
+        """
+        window_to_show.scale = 1
+
+        self.cp.left_menu.disabled = True
+        self.cp.top_menu.disabled = True
+        self.main_window.disabled = True
+        self.cp.left_menu.opacity = 0.3
+        self.cp.top_menu.opacity = 0.3
+        self.main_window.opacity = 0.3
+        self.cp.page.update()
+
     @staticmethod
     def run_async_in_thread(coro):
         def runner():
@@ -411,7 +443,6 @@ class ReportBook(ft.Container):
 
         self.cp.page.update()
 
-
     async def filter_datas(self, e):
         year_id = self.cp.year_id
         access_token = self.cp.page.client_storage.get('access_token')
@@ -479,16 +510,7 @@ class ReportBook(ft.Container):
         access_token = self.cp.page.client_storage.get('access_token')
         year_id = self.cp.year_id
 
-        self.details_window.scale = 1
-
-        # désactiver les menus
-        self.main_window.opacity = 0.3
-        self.main_window.disabled = True
-        self.cp.left_menu.opacity = 0.3
-        self.cp.left_menu.disabled = True
-        self.cp.top_menu.opacity = 0.3
-        self.cp.top_menu.disabled = True
-        self.cp.page.update()
+        self.show_one_window(self.details_window)
 
         self.det_image.foreground_image_src = e.control.data['student_image']
         self.det_name.value = e.control.data['student_name']
@@ -551,13 +573,4 @@ class ReportBook(ft.Container):
         self.run_async_in_thread(self.load_details_by_student(e))
 
     def close_details_window(self, e):
-        self.details_window.scale = 0
-
-        # désactiver les menus
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.top_menu.opacity = 1
-        self.cp.top_menu.disabled = False
-        self.cp.page.update()
+        self.hide_one_window(self.details_window)

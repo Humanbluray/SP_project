@@ -1,10 +1,9 @@
-import flet as ft
-from components import MyButton, MyIconButton, MyMiniIcon, ColoredIcon, ColoredButton, ColoredIconButton
-from utils.styles import search_style, drop_style, login_style, other_style, datatable_style, cool_style
-from utils.couleurs import *
-from translations.translations import languages
-import os, mimetypes, asyncio, threading
+import threading
+from components import MyMiniIcon, ColoredIcon, ColoredButton, ColoredIconButton
 from services.async_functions.fees_functions import *
+from translations.translations import languages
+from utils.couleurs import *
+from utils.styles import drop_style, datatable_style
 from utils.useful_functions import format_number, add_separator
 
 

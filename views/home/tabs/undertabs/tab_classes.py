@@ -1,7 +1,5 @@
-import flet as ft
-from PIL.ImageChops import difference
 from utils.couleurs import *
-from utils.styles import *
+from utils.styles import drop_style
 from components import *
 from translations.translations import languages
 import asyncio, threading
@@ -299,6 +297,38 @@ class TabClasses(ft.Tab):
     def on_mount(self):
         self.run_async_in_thread(self.on_init_async())
 
+    def hide_one_window(self, window_to_hide: object):
+        """
+        This function helps to make menus clickable
+        :param window_to_hide:
+        :return:
+        """
+        window_to_hide.scale = 0
+
+        self.cp.left_menu.disabled = False
+        self.cp.top_menu.disabled = False
+        self.main_window.disabled = False
+        self.cp.left_menu.opacity = 1
+        self.cp.top_menu.opacity = 1
+        self.main_window.opacity = 1
+        self.cp.page.update()
+
+    def show_one_window(self, window_to_show):
+        """
+        This function helps to make menus non-clickable
+        :param window_to_show:
+        :return:
+        """
+        window_to_show.scale = 1
+
+        self.cp.left_menu.disabled = True
+        self.cp.top_menu.disabled = True
+        self.main_window.disabled = True
+        self.cp.left_menu.opacity = 0.3
+        self.cp.top_menu.opacity = 0.3
+        self.main_window.opacity = 0.3
+        self.cp.page.update()
+
     @staticmethod
     def run_async_in_thread(coro):
         def runner():
@@ -377,15 +407,7 @@ class TabClasses(ft.Tab):
         self.new_subject.value = " "
         self.new_subject.update()
 
-        self.new_affectation_window.scale = 0
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.cp.left_menu.opacity = 1
-        self.cp.cp.left_menu.disabled = False
-        self.new_subject.options.clear()
-        self.check_validity.name = None
-        self.check_validity_load.name = None
-        self.cp.page.update()
+        self.hide_one_window(self.new_affectation_window)
 
     def refresh_view(self):
         self.run_async_in_thread(self.update_current_view())
@@ -541,12 +563,7 @@ class TabClasses(ft.Tab):
                 self.cp.cp.box.update()
 
     async def load_details(self, e):
-        self.details_window.scale = 1
-        self.main_window.opacity = 0.3
-        self.main_window.disabled = True
-        self.cp.cp.left_menu.opacity = 0.3
-        self.cp.cp.left_menu.disabled = True
-        self.cp.cp.page.update()
+        self.show_one_window(self.details_window)
 
         access_token = self.cp.cp.page.client_storage.get('access_token')
         self.det_class.value = await get_class_code_by_id_async(self.search_class.value, access_token)
@@ -602,12 +619,7 @@ class TabClasses(ft.Tab):
         self.det_table.rows.clear()
         self.det_progress_bar.value = None
 
-        self.details_window.scale = 0
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.cp.left_menu.opacity = 1
-        self.cp.cp.left_menu.disabled = False
-        self.cp.page.update()
+        self.hide_one_window(self.details_window)
 
 
 

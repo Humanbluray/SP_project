@@ -766,6 +766,38 @@ class Teachers(ft.Container):
 
         self.on_mount()
 
+    def hide_one_window(self, window_to_hide: object):
+        """
+        This function helps to make menus clickable
+        :param window_to_hide:
+        :return:
+        """
+        window_to_hide.scale = 0
+
+        self.cp.left_menu.disabled = False
+        self.cp.top_menu.disabled = False
+        self.main_window.disabled = False
+        self.cp.left_menu.opacity = 1
+        self.cp.top_menu.opacity = 1
+        self.main_window.opacity = 1
+        self.cp.page.update()
+
+    def show_one_window(self, window_to_show):
+        """
+        This function helps to make menus non-clickable
+        :param window_to_show:
+        :return:
+        """
+        window_to_show.scale = 1
+
+        self.cp.left_menu.disabled = True
+        self.cp.top_menu.disabled = True
+        self.main_window.disabled = True
+        self.cp.left_menu.opacity = 0.3
+        self.cp.top_menu.opacity = 0.3
+        self.main_window.opacity = 0.3
+        self.cp.page.update()
+
     @staticmethod
     def run_async_in_thread(coro):
         def runner():
@@ -914,20 +946,10 @@ class Teachers(ft.Container):
             self.cp.box.open = True
             self.cp.box.update()
         else:
-            self.new_teacher_window.scale = 1
-            self.main_window.opacity = 0.3
-            self.main_window.disabled = True
-            self.cp.left_menu.opacity = 0.3
-            self.cp.left_menu.disabled = True
-            self.cp.page.update()
+            self.show_one_window(self.new_teacher_window)
 
     def close_new_teacher_window(self, e):
-        self.new_teacher_window.scale = 0
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.page.update()
+        self.hide_one_window(self.new_teacher_window)
 
     def add_teacher(self, e):
         count = 0
@@ -978,12 +1000,7 @@ class Teachers(ft.Container):
     async def load_schedule(self, e):
         self.table_schedule.rows.clear()
         self.cp.page.update()
-        self.schedule_window.scale = 1
-        self.main_window.opacity = 0.3
-        self.main_window.disabled = True
-        self.cp.left_menu.opacity = 0.3
-        self.cp.left_menu.disabled = True
-        self.cp.page.update()
+        self.show_one_window(self.schedule_window)
 
         access_token = self.cp.page.client_storage.get('access_token')
         time_table = await get_teacher_affectations(e.control.data['id'], access_token)
@@ -1018,20 +1035,13 @@ class Teachers(ft.Container):
                     )
                 )
 
-            self.cp.page.update()
-
         self.cp.page.update()
 
     def open_schedule_window(self, e):
         self.run_async_in_thread(self.load_schedule(e))
 
     def close_schedule_window(self, e):
-        self.schedule_window.scale = 0
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.page.update()
+        self.hide_one_window(self.schedule_window)
 
     def open_edit_teacher_window(self, e):
 
@@ -1065,13 +1075,7 @@ class Teachers(ft.Container):
                     if item.name in e.control.data['subjects']:
                         item.set_selected()
 
-            # display
-            self.edit_teacher_window.scale = 1
-            self.main_window.opacity = 0.3
-            self.main_window.disabled = True
-            self.cp.left_menu.opacity = 0.3
-            self.cp.left_menu.disabled = True
-            self.cp.page.update()
+            self.show_one_window(self.edit_teacher_window)
 
     def close_edit_teacher_window(self, e):
         for item in self.edit_select_subjects.controls[:]:
@@ -1086,12 +1090,7 @@ class Teachers(ft.Container):
         self.edit_count_subject.value = None
         self.edit_subject.value = None
 
-        self.edit_teacher_window.scale = 0
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.page.update()
+        self.hide_one_window(self.edit_teacher_window)
 
     def edit_teacher(self, e):
         role = self.cp.page.client_storage.get('role')
@@ -1142,12 +1141,7 @@ class Teachers(ft.Container):
                 ).eq('id', self.edit_uid.value).execute()
 
         self.on_mount()
-        self.edit_teacher_window.scale = 0
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.page.update()
+        self.hide_one_window(self.edit_teacher_window)
 
         for item in self.edit_select_subjects.controls[:]:
             item.set_initial()
@@ -1189,12 +1183,7 @@ class Teachers(ft.Container):
                 )
             )
 
-        self.head_teacher_window.scale = 1
-        self.main_window.opacity = 0.1
-        self.main_window.disabled = True
-        self.cp.left_menu.opacity = 0.1
-        self.cp.left_menu.disabled = True
-        self.cp.page.update()
+        self.show_one_window(self.head_teacher_window)
 
     def open_head_teacher_window(self, e):
         self.run_async_in_thread(self.load_head_teacher_datas(e))
@@ -1210,12 +1199,7 @@ class Teachers(ft.Container):
             widget.value = ' '
             widget.update()
 
-        self.head_teacher_window.scale = 0
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.page.update()
+        self.hide_one_window(self.head_teacher_window)
 
     def valid_assignment(self, e):
         if self.head_class_name.value != ' ' and self.head_teacher_name.value != ' ':
@@ -1241,12 +1225,7 @@ class Teachers(ft.Container):
                 widget.update()
 
             self.on_mount()
-            self.head_teacher_window.scale = 0
-            self.main_window.opacity = 1
-            self.main_window.disabled = False
-            self.cp.left_menu.opacity = 1
-            self.cp.left_menu.disabled = False
-            self.cp.page.update()
+            self.hide_one_window(self.head_teacher_window)
 
         else:
             self.cp.box.title.value = languages[self.lang]['error']

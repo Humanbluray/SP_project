@@ -761,6 +761,38 @@ class Notes(ft.Container):
         )
         self.on_mount()
 
+    def hide_one_window(self, window_to_hide: object):
+        """
+        This function helps to make menus clickable
+        :param window_to_hide:
+        :return:
+        """
+        window_to_hide.scale = 0
+
+        self.cp.left_menu.disabled = False
+        self.cp.top_menu.disabled = False
+        self.main_window.disabled = False
+        self.cp.left_menu.opacity = 1
+        self.cp.top_menu.opacity = 1
+        self.main_window.opacity = 1
+        self.cp.page.update()
+
+    def show_one_window(self, window_to_show):
+        """
+        This function helps to make menus non-clickable
+        :param window_to_show:
+        :return:
+        """
+        window_to_show.scale = 1
+
+        self.cp.left_menu.disabled = True
+        self.cp.top_menu.disabled = True
+        self.main_window.disabled = True
+        self.cp.left_menu.opacity = 0.3
+        self.cp.top_menu.opacity = 0.3
+        self.main_window.opacity = 0.3
+        self.cp.page.update()
+
     @staticmethod
     def run_async_in_thread(coro):
         def runner():
@@ -891,20 +923,10 @@ class Notes(ft.Container):
         self.run_async_in_thread(self.load_subject_filter(e))
 
     def open_filter_window(self, e):
-        self.filter_window.scale = 1
-        self.main_window.opacity = 0.3
-        self.main_window.disabled = True
-        self.cp.left_menu.opacity = 0.3
-        self.cp.left_menu.disabled = True
-        self.cp.page.update()
+        self.show_one_window(self.filter_window)
 
     def close_filter_window(self, e):
-        self.filter_window.scale = 0
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.page.update()
+        self.hide_one_window(self.filter_window)
 
     async def load_new_notes_data(self, e):
         role = self.cp.page.client_storage.get('role')
@@ -917,12 +939,7 @@ class Notes(ft.Container):
             self.cp.box.open = True
             self.cp.box.update()
         else:
-            self.new_note_window.scale = 1
-            self.main_window.opacity = 0.3
-            self.main_window.disabled = True
-            self.cp.left_menu.opacity = 0.3
-            self.cp.left_menu.disabled = True
-            self.cp.page.update()
+            self.show_one_window(self.new_note_window)
 
             self.new_class.options.clear()
             self.new_class.options.append(
@@ -975,12 +992,7 @@ class Notes(ft.Container):
         self.new_table.controls.clear()
         self.new_subject.value = ' '
 
-        self.new_note_window.scale = 0
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.page.update()
+        self.hide_one_window(self.new_note_window)
 
     async def load_students(self, e):
         access_token = self.cp.page.client_storage.get('access_token')
@@ -1047,12 +1059,7 @@ class Notes(ft.Container):
             self.new_table.controls.clear()
             self.new_subject.value = ' '
 
-            self.new_note_window.scale = 0
-            self.main_window.opacity = 1
-            self.main_window.disabled = False
-            self.cp.left_menu.opacity = 1
-            self.cp.left_menu.disabled = False
-            self.cp.page.update()
+            self.hide_one_window(self.new_note_window)
 
             self.cp.box.title.value = languages[self.lang]['success']
             self.cp.box.content.value = languages[self.lang]['notes added']
@@ -1085,20 +1092,10 @@ class Notes(ft.Container):
                 self.edit_subject_name.value = e.control.data['subject_name']
                 self.edit_note.value = e.control.data['valeur']
 
-                self.edit_note_window.scale = 1
-                self.main_window.opacity = 0.3
-                self.main_window.disabled = True
-                self.cp.left_menu.opacity = 0.3
-                self.cp.left_menu.disabled = True
-                self.cp.page.update()
+                self.show_one_window(self.edit_note_window)
 
     def close_edit_note_window(self, e):
-        self.edit_note_window.scale = 0
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.page.update()
+        self.hide_one_window(self.edit_note_window)
 
     def valider_edit_note(self, e):
         if self.edit_note.vaue is None:
@@ -1123,12 +1120,7 @@ class Notes(ft.Container):
                 supabase_client.table('notes').update(datas).eq('id', self.edit_note_id.value).execute()
                 supabase_client.table('edited_notes').insert(edited_datas).execute()
 
-                self.edit_note_window.scale = 0
-                self.main_window.opacity = 1
-                self.main_window.disabled = False
-                self.cp.left_menu.opacity = 1
-                self.cp.left_menu.disabled = False
-                self.cp.page.update()
+                self.hide_one_window(self.edit_note_window)
 
                 self.cp.box.title.value = languages[self.lang]['success']
                 self.cp.box.content.value = languages[self.lang]['note edited']
@@ -1146,12 +1138,7 @@ class Notes(ft.Container):
             self.cp.box.open = True
             self.cp.box.update()
         else:
-            self.export_xls_window.scale = 1
-            self.main_window.opacity = 0.3
-            self.main_window.disabled = True
-            self.cp.left_menu.opacity = 0.3
-            self.cp.left_menu.disabled = True
-            self.cp.page.update()
+            self.show_one_window(self.export_xls_window)
 
             self.exp_class.options.clear()
 
@@ -1173,12 +1160,7 @@ class Notes(ft.Container):
         self.exp_coefficient.value = None
         self.exp_subject.value = ' '
 
-        self.export_xls_window.scale = 0
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.page.update()
+        self.hide_one_window(self.export_xls_window)
 
     async def load_export_subjects(self, e):
         access_token = self.cp.page.client_storage.get('access_token')
@@ -1467,20 +1449,10 @@ class Notes(ft.Container):
             self.cp.box.open = True
             self.cp.box.update()
         else:
-            self.import_window.scale = 1
-            self.main_window.opacity = 0.3
-            self.main_window.disabled = True
-            self.cp.left_menu.opacity = 0.3
-            self.cp.left_menu.disabled = True
-            self.cp.page.update()
+            self.show_one_window(self.import_window)
 
     def close_import_window(self, e):
-        self.import_window.scale = 0
-        self.main_window.opacity = 1
-        self.main_window.disabled = False
-        self.cp.left_menu.opacity = 1
-        self.cp.left_menu.disabled = False
-        self.cp.page.update()
+        self.hide_one_window(self.import_window)
 
 
 
