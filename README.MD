@@ -33,17 +33,16 @@ School Pilot fournit une interface intuitive pour gérer toutes les données d�
 - **Gestion financière** : frais de scolarité, paiements partiels et rapports.
 - **Notes et bulletins** : saisie, calcul de moyennes, génération de bulletins.
 - **Gestion des utilisateurs** : rôles et autorisations personnalisées.
-- **Accès multi-plateforme** : web et mobile.
+- **Accès** : web
 - **Connexion sécurisée** via **Supabase Auth**.
 
 ---
 
-## 🛠 Technologies utilisées
-
-- **Langage** : Python 3.10+
+## 🛠 Technologies utilisée
+- **Langage** : Python 3.13
 - **Framework UI** : [Flet](https://flet.dev)
 - **Base de données** : [Supabase](https://supabase.com)
-- **Déploiement** : [Railway](https://railway.app) / Render
+- **Déploiement** : [Railway](https://railway.app)
 - **Authentification** : Supabase Auth
 - **Stockage de fichiers** : Supabase Storage
 
@@ -52,7 +51,7 @@ School Pilot fournit une interface intuitive pour gérer toutes les données d�
 ## ⚙️ Installation
 
 ### Prérequis
-- Python 3.10 ou supérieur
+- Python 3.13
 - Un compte [Supabase](https://supabase.com)
 - Git
 
