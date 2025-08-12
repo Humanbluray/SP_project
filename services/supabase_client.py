@@ -16,6 +16,7 @@ national_devise_fr = os.getenv('NATIONAL_DEVISE_FR')
 national_devise_en = os.getenv('NATIONAL_DEVISE_EN')
 school_republic_fr = os.getenv('SCHOOL_REPUBLIC_FR')
 school_republic_en = os.getenv('SCHOOL_REPUBLIC_EN')
+logo_url = os.getenv('LOGO_URL')
 
 supabase_client = create_client(url, key)
 

@@ -13,6 +13,12 @@ def get_current_year_label():
     return resp.data['name']
 
 
+def get_current_year_short():
+    resp = supabase_client.table('years').select('short').eq('active', True).single().execute()
+    return resp.data['short']
+
+
+
 def get_current_year_id():
     resp = supabase_client.table('years').select('id').eq('active', True).single().execute()
     return resp.data['id']

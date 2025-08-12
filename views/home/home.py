@@ -5,7 +5,7 @@ from components.Menu import NavBar
 from translations.translations import languages
 from services.supabase_client import supabase_client
 import asyncio
-from services.async_functions.students_functions import get_current_year_id, get_current_year_label
+from services.async_functions.students_functions import get_current_year_id, get_current_year_label, get_current_year_short
 from services.async_functions.general_functions import get_active_quarter, get_active_sequence
 
 user_infos_is_active = False
@@ -25,6 +25,7 @@ class Home(ft.View):
         self.page = page
         self.year_id = get_current_year_id()
         self.year_label = get_current_year_label()
+        self.year_short = get_current_year_short()
 
         # On prépare aussi les éléments à l'avance (pour éviter les erreurs plus tard)
         self.user_account = ft.Text(size=13, font_family='PPM')

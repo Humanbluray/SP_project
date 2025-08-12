@@ -328,7 +328,9 @@
         "success": "succès",
         "success 2": "réussites",
         "success rate": "taux de réussite",
-        "successful assignment": "affectation réussie"
+        "successful assignment": "affectation réussie",
+        "data loading": "chargement des données",
+        "report card": "bulletin scolaire"
     },
     "en": {
         "academic year": "academic year",
@@ -659,6 +661,8 @@
         "success": "success",
         "success 2": "success",
         "success rate": "success rate",
-        "successful assignment": "successful assignment"
+        "successful assignment": "successful assignment",
+        "data loading": "data loading",
+        "report card": "report card"
     }
 }
