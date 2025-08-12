@@ -329,7 +329,8 @@
         "success rate": "taux de réussite",
         "successful assignment": "affectation réussie",
         "data loading": "chargement des données",
-        "report card": "bulletin scolaire"
+        "report card": "bulletin scolaire",
+        "loading screen": "Patientez pendant le chargement…"
     },
     "en": {
         "academic year": "academic year",
@@ -661,6 +662,7 @@
         "success rate": "success rate",
         "successful assignment": "successful assignment",
         "data loading": "data loading",
-        "report card": "report card"
+        "report card": "report card",
+        "loading screen": "loading please wait…"
     }
 }

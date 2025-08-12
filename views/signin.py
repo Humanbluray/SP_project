@@ -47,28 +47,24 @@ class Signin(ft.View):
             size=11,
             font_family='PPM', color='grey')
         self.login_text = ft.Text(languages[self.lang_button.value]['login'], size=24, font_family="PBL")
+
         self.controls=[
-            ft.Container(
-                border_radius=24, padding=0, width=700, bgcolor='white',
-                content=ft.Row(
-                    controls=[
-                        ft.Container(
-                            alignment=ft.alignment.center, bgcolor='grey50',
-                            border_radius=0, width=350,
-                            padding=0,
+            ft.Stack(
+                controls=[
+                    ft.Container(
+                        expand=True, padding=0, alignment=ft.alignment.center,
+                        content=ft.Image(
+                            src='assets/pictures/background.png', expand=True, opacity=0.3, scale=1.5
+                        )
+                    ),
+                    ft.Card(
+                        elevation=10, shape=ft.RoundedRectangleBorder(radius=24),
+                        content=ft.Container(
+                            padding=20, alignment=ft.alignment.center, bgcolor='white', width=400,
+                            border_radius=24,
                             content=ft.Column(
                                 controls=[
-                                    ft.Image(src='/pictures/logo complet.png', width=400, height=400),
-                                ], horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                                alignment=ft.MainAxisAlignment.CENTER
-                            )
-                        ),
-                        ft.Container(
-                            alignment=ft.alignment.center, bgcolor='white', border_radius=0, width=350,
-                            padding=20,
-                            content=ft.Column(
-                                controls=[
-                                    ft.Text(''),
+                                    ft.Image(src='/pictures/logo.png', width=200, height=200),
                                     ft.Container(
                                         padding=20, content=ft.Column(
                                             controls=[
@@ -102,14 +98,16 @@ class Signin(ft.View):
                                         )
                                     ),
                                     ft.Text("")
-                                ], horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                                alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                                ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=0
+
                             )
                         )
-                    ], spacing=0
-                )
+                    )
+                ], alignment=ft.alignment.center
             )
         ]
+
+
 
         self.box = ft.AlertDialog(
             # surface_tint_color="white", bgcolor="white",

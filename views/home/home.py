@@ -177,7 +177,14 @@ class Home(ft.View):
             self.page.overlay.append(widget)
 
         # Indicateur de chargement
-        self.controls = [ft.ProgressRing(color=BASE_COLOR)]
+        self.controls = [
+            ft.Column(
+                controls=[
+                    ft.Text(languages[language]['loading screen'], size=12, font_family="PPM", color="grey"),
+                    ft.ProgressRing(color=BASE_COLOR, scale=2)
+                ]
+            )
+        ]
 
     async def did_mount_async(self):
         print("[DEBUG] Vue montée : appel check_auth()")

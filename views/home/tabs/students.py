@@ -27,7 +27,7 @@ selected_fees = ''
 class Students(ft.Container):
     def __init__(self, cp: object):
         super().__init__(
-            expand=True
+            expand=True, alignment=ft.alignment.center
         )
         # parent container (Home) ____________________________________________________________
         self.cp = cp
@@ -39,16 +39,16 @@ class Students(ft.Container):
         self.current_year_label = ft.Text(f"{get_current_year_label()}", size=11, color='indigo', font_family="PPM")
         self.search = ft.TextField(
             **cool_style, on_change=self.on_search_change,
-            prefix_icon=ft.Icons.PERSON_OUTLINED, label=languages[lang]['name'], width=300,
+            prefix_icon=ft.Icons.PERSON_OUTLINED, label=languages[self.lang]['name'], width=300,
         )
         self.table = ft.DataTable(
             **datatable_style, expand=True,
             columns=[
-                ft.DataColumn(ft.Row([ft.Icon('person_outlined', size=20, color='black45'),ft.Text(languages[lang]['name'].capitalize())])),
+                ft.DataColumn(ft.Row([ft.Icon('person_outlined', size=20, color='black45'),ft.Text(languages[self.lang]['name'].capitalize())])),
                 ft.DataColumn(
-                    ft.Row([ft.Icon(ft.Icons.SWITCH_ACCOUNT_OUTLINED, size=20, color='black45'), ft.Text(languages[lang]['profile'].capitalize())])),
+                    ft.Row([ft.Icon(ft.Icons.SWITCH_ACCOUNT_OUTLINED, size=20, color='black45'), ft.Text(languages[self.lang]['profile'].capitalize())])),
                 ft.DataColumn(
-                    ft.Row([ft.Icon('roofing', size=20, color='black45'), ft.Text(languages[lang]['class'].capitalize())])),
+                    ft.Row([ft.Icon('roofing', size=20, color='black45'), ft.Text(languages[self.lang]['class'].capitalize())])),
                 ft.DataColumn(
                     ft.Row([ft.Icon(ft.Icons.FORMAT_LIST_BULLETED_OUTLINED, size=20, color='black45'), ft.Text('Actions')]))
             ]
@@ -75,14 +75,14 @@ class Students(ft.Container):
                                         ft.Row(
                                             controls=[
                                                 ColoredIcon(ft.Icons.PIE_CHART_SHARP, 'indigo', 'indigo50'),
-                                                ft.Text(languages[lang]['head count'].upper(), size=12, font_family='PPI',
+                                                ft.Text(languages[self.lang]['head count'].upper(), size=12, font_family='PPI',
                                                         color='indigo')
                                             ], alignment=ft.MainAxisAlignment.START
                                         ),
                                         ft.Column(
                                             controls=[
                                                 self.registered_count,
-                                                ft.Text(languages[lang]['nb students'], size=11, font_family='PPI',
+                                                ft.Text(languages[self.lang]['nb students'], size=11, font_family='PPI',
                                                         color='grey')
                                             ], spacing=0
                                         )
@@ -98,7 +98,7 @@ class Students(ft.Container):
                                         ft.Row(
                                             controls=[
                                                 ColoredIcon(ft.Icons.PIE_CHART_SHARP, 'teal', 'teal50'),
-                                                ft.Text(languages[lang]['boys'].upper(), size=12,
+                                                ft.Text(languages[self.lang]['boys'].upper(), size=12,
                                                         font_family='PPI',
                                                         color='teal')
                                             ], alignment=ft.MainAxisAlignment.START
@@ -106,7 +106,7 @@ class Students(ft.Container):
                                         ft.Column(
                                             controls=[
                                                 self.boys,
-                                                ft.Text(languages[lang]['boys registered'], size=11, font_family='PPI',
+                                                ft.Text(languages[self.lang]['boys registered'], size=11, font_family='PPI',
                                                         color='grey')
                                             ], spacing=0
                                         )
@@ -122,7 +122,7 @@ class Students(ft.Container):
                                         ft.Row(
                                             controls=[
                                                 ColoredIcon(ft.Icons.BAR_CHART_ROUNDED, 'deeporange', 'deeporange50'),
-                                                ft.Text(languages[lang]['girls'].upper(), size=12,
+                                                ft.Text(languages[self.lang]['girls'].upper(), size=12,
                                                         font_family='PPI',
                                                         color='deeporange')
                                             ], alignment=ft.MainAxisAlignment.START
@@ -130,7 +130,7 @@ class Students(ft.Container):
                                         ft.Column(
                                             controls=[
                                                 self.girls,
-                                                ft.Text(languages[lang]['girls registered'], size=11, font_family='PPI',
+                                                ft.Text(languages[self.lang]['girls registered'], size=11, font_family='PPI',
                                                         color='grey')
                                             ], spacing=0
                                         )
@@ -146,7 +146,7 @@ class Students(ft.Container):
                                         ft.Row(
                                             controls=[
                                                 ColoredIcon(ft.Icons.BAR_CHART_ROUNDED, 'green', 'green50'),
-                                                ft.Text(languages[lang]['cp'].upper(), size=12,
+                                                ft.Text(languages[self.lang]['cp'].upper(), size=12,
                                                         font_family='PPI',
                                                         color='green')
                                             ], alignment=ft.MainAxisAlignment.START
@@ -154,7 +154,7 @@ class Students(ft.Container):
                                         ft.Column(
                                             controls=[
                                                 self.completed_rate,
-                                                ft.Text(languages[lang]['complete profiles'], size=11, font_family='PPI',
+                                                ft.Text(languages[self.lang]['complete profiles'], size=11, font_family='PPI',
                                                         color='grey')
                                             ], spacing=0
                                         )
@@ -178,12 +178,12 @@ class Students(ft.Container):
                                                     ft.Row(
                                                         controls=[
                                                             ColoredButton(
-                                                                languages[lang]['new registration'],
+                                                                languages[self.lang]['new registration'],
                                                                 ft.Icons.ADD_HOME_OUTLINED,
                                                                 self.open_ct_registrations
                                                             ),
                                                             ColoredButton(
-                                                                languages[lang]['new student'],
+                                                                languages[self.lang]['new student'],
                                                                 ft.Icons.PERSON_ADD_OUTLINED,
                                                                 self.open_new_student_container
                                                             ),
@@ -209,19 +209,19 @@ class Students(ft.Container):
                                                             ft.Icon(
                                                                 ft.Icons.DOWNLOAD_DONE, size=20, color="black87"
                                                             ),
-                                                            ft.Text(languages[lang]['data extraction'].upper(), size=12,
+                                                            ft.Text(languages[self.lang]['data extraction'].upper(), size=12,
                                                                     font_family='PPB'),
                                                         ]
                                                     ),
                                                     ft.Row(
                                                         controls=[
                                                             ColoredButton(
-                                                                languages[lang]['pdf format'],
+                                                                languages[self.lang]['pdf format'],
                                                                 ft.Icons.PICTURE_AS_PDF_SHARP,
                                                                 None
                                                             ),
                                                             ColoredButton(
-                                                                languages[lang]['xls format'],
+                                                                languages[self.lang]['xls format'],
                                                                 ft.Icons.FILE_PRESENT,
                                                                 None
                                                             )
@@ -230,7 +230,7 @@ class Students(ft.Container):
                                                 ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
                                             )
                                         ),
-                                    ]
+                                    ], horizontal_alignment=ft.CrossAxisAlignment.CENTER
                                 )
                             ),
                             ft.Column(
@@ -245,7 +245,7 @@ class Students(ft.Container):
                                                         ft.Icon(
                                                             ft.Icons.DOWNLOAD_DONE, size=20, color="black87"
                                                         ),
-                                                        ft.Text(languages[lang]['data extraction'].upper(), size=12,
+                                                        ft.Text(languages[self.lang]['data extraction'].upper(), size=12,
                                                                 font_family='PPB'),
                                                     ]
                                                 ),
@@ -253,12 +253,12 @@ class Students(ft.Container):
                                                 ft.Row(
                                                     controls=[
                                                         ColoredButton(
-                                                            languages[lang]['pdf format'],
+                                                            languages[self.lang]['pdf format'],
                                                             ft.Icons.PICTURE_AS_PDF_SHARP,
                                                             None
                                                         ),
                                                         ColoredButton(
-                                                            languages[lang]['xls format'],
+                                                            languages[self.lang]['xls format'],
                                                             ft.Icons.FILE_PRESENT,
                                                             None
                                                         )
@@ -283,7 +283,7 @@ class Students(ft.Container):
         self.new_prenom = ft.TextField(**cool_style, prefix_icon=ft.Icons.PERSON_OUTLINE_OUTLINED, width=300)
         self.new_date = DateSelection(self)
         self.new_sex = ft.Dropdown(
-            **drop_style, width=130, label=languages[lang]['gender'],
+            **drop_style, width=130, label=languages[self.lang]['gender'],
             prefix_icon=ft.Icons.WC_OUTLINED, options=[
                 ft.dropdown.Option(gender) for gender in ['M', 'F']
             ]
@@ -322,7 +322,7 @@ class Students(ft.Container):
                             border_radius=ft.border_radius.only(top_left=8, top_right=8),
                             content=ft.Row(
                                 controls=[
-                                    ft.Text(languages[lang]['new student'], size=16, font_family='PPB'),
+                                    ft.Text(languages[self.lang]['new student'], size=16, font_family='PPB'),
                                     ft.IconButton(
                                         'close', icon_color='black87', bgcolor=CT_BGCOLOR, scale=0.7,
                                         on_click=self.close_new_student_container
@@ -339,7 +339,7 @@ class Students(ft.Container):
                                 controls=[
                                     ft.Column(
                                         controls=[
-                                            ft.Text(languages[lang]['student info'].upper(), size=12,
+                                            ft.Text(languages[self.lang]['student info'].upper(), size=12,
                                                     font_family="PPB"),
                                             ft.Divider(height=1, thickness=1)
                                         ], spacing=0
@@ -348,14 +348,14 @@ class Students(ft.Container):
                                         controls=[
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['name'], size=11, font_family='PPM',
+                                                    ft.Text(languages[self.lang]['name'], size=11, font_family='PPM',
                                                             color='grey'),
                                                     self.new_nom
                                                 ], spacing=2
                                             ),
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['surname'], size=11, font_family='PPM',
+                                                    ft.Text(languages[self.lang]['surname'], size=11, font_family='PPM',
                                                             color='grey'),
                                                     self.new_prenom
                                                 ], spacing=2
@@ -365,7 +365,7 @@ class Students(ft.Container):
                                     ft.Row([self.new_date, self.new_sex]),
                                     ft.Column(
                                         controls=[
-                                            ft.Text(languages[lang]['place of birth'], size=11, font_family='PPM',
+                                            ft.Text(languages[self.lang]['place of birth'], size=11, font_family='PPM',
                                                     color='grey'),
                                             self.new_lieu,
                                         ], spacing=2
@@ -373,7 +373,7 @@ class Students(ft.Container):
                                     ft.Divider(height=1, color=ft.Colors.TRANSPARENT),
                                     ft.Column(
                                         controls=[
-                                            ft.Text(languages[lang]['parent info'].upper(), size=11, font_family="PPB"),
+                                            ft.Text(languages[self.lang]['parent info'].upper(), size=11, font_family="PPB"),
                                             ft.Divider(height=1, thickness=1)
                                         ], spacing=0
                                     ),
@@ -381,14 +381,14 @@ class Students(ft.Container):
                                         controls=[
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['father'], size=11, font_family='PPM',
+                                                    ft.Text(languages[self.lang]['father'], size=11, font_family='PPM',
                                                             color='grey'),
                                                     self.new_pere
                                                 ], spacing=2
                                             ),
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['mother'], size=11, font_family='PPM',
+                                                    ft.Text(languages[self.lang]['mother'], size=11, font_family='PPM',
                                                             color='grey'),
                                                     self.new_mere
                                                 ], spacing=2
@@ -399,14 +399,14 @@ class Students(ft.Container):
                                         [
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['contact'], size=11, font_family='PPM',
+                                                    ft.Text(languages[self.lang]['contact'], size=11, font_family='PPM',
                                                             color='grey'),
                                                     self.new_contact
                                                 ], spacing=2
                                             ),
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['contact 2'], size=11, font_family='PPM',
+                                                    ft.Text(languages[self.lang]['contact 2'], size=11, font_family='PPM',
                                                             color='grey'),
                                                     self.new_other
                                                 ], spacing=2
@@ -415,13 +415,13 @@ class Students(ft.Container):
                                     ),
                                     ft.Column(
                                         controls=[
-                                            ft.Text(languages[lang]['residence'], size=11, font_family='PPM',
+                                            ft.Text(languages[self.lang]['residence'], size=11, font_family='PPM',
                                                     color='grey'),
                                             self.new_residence
                                         ], spacing=2
                                     ),
                                     ft.Divider(height=1, color=ft.Colors.TRANSPARENT),
-                                    ft.Row([MyButton(languages[lang]['valid'], 'check', 200, self.add_eleve)])
+                                    ft.Row([MyButton(languages[self.lang]['valid'], 'check', 200, self.add_eleve)])
                                 ], spacing=10,
                             )
                         )
@@ -433,7 +433,7 @@ class Students(ft.Container):
         # Edit student window ______________________________________________________________________________________
         self.edit_id_student = ''
         self.edit_nom = ft.TextField(
-            **login_style, prefix_icon=ft.Icons.PERSON_OUTLINE_OUTLINED, width=400, label=languages[lang]['name'],
+            **login_style, prefix_icon=ft.Icons.PERSON_OUTLINE_OUTLINED, width=400, label=languages[self.lang]['name'],
             capitalization=ft.TextCapitalization.CHARACTERS
         )
         self.edit_prenom = ft.TextField(**login_style, prefix_icon=ft.Icons.PERSON_OUTLINE_OUTLINED, width=400)
@@ -471,7 +471,7 @@ class Students(ft.Container):
         )
         self.cp.fp_image_student.on_result = self.set_image_url
         self.image_button = MyButton(
-            languages[lang]['load image'], ft.Icons.ADD_A_PHOTO_OUTLINED, 200,
+            languages[self.lang]['load image'], ft.Icons.ADD_A_PHOTO_OUTLINED, 200,
             lambda _: self.cp.fp_image_student.pick_files(allow_multiple=False, allowed_extensions=['png', 'jpg', 'webp', 'avif'])
         )
         self.image_preview = ft.CircleAvatar(radius=50)
@@ -487,7 +487,7 @@ class Students(ft.Container):
                             border_radius=ft.border_radius.only(top_left=8, top_right=8),
                             content=ft.Row(
                                 controls=[
-                                    ft.Text(languages[lang]['edit student'], size=16, font_family='PPB'),
+                                    ft.Text(languages[self.lang]['edit student'], size=16, font_family='PPB'),
                                     ft.IconButton('close', icon_color='black87', bgcolor=CT_BGCOLOR, scale=0.7,
                                                   on_click=self.close_ct_edit_student),
                                 ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
@@ -506,13 +506,13 @@ class Students(ft.Container):
                                                 controls=[
                                                     ft.Column(
                                                         controls=[
-                                                            ft.Text(languages[lang]['name'], color='grey', size=11, font_family='PPM'),
+                                                            ft.Text(languages[self.lang]['name'], color='grey', size=11, font_family='PPM'),
                                                             self.edit_nom
                                                         ], spacing=2
                                                     ),
                                                     ft.Column(
                                                         controls=[
-                                                            ft.Text(languages[lang]['surname'], color='grey', size=11,
+                                                            ft.Text(languages[self.lang]['surname'], color='grey', size=11,
                                                                     font_family='PPM'),
                                                             self.edit_prenom
                                                         ], spacing=2
@@ -528,21 +528,21 @@ class Students(ft.Container):
                                         controls=[
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['gender'], color='grey', size=11,
+                                                    ft.Text(languages[self.lang]['gender'], color='grey', size=11,
                                                             font_family='PPM'),
                                                     self.edit_sex
                                                 ], spacing=2
                                             ),
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['born in'], color='grey', size=11,
+                                                    ft.Text(languages[self.lang]['born in'], color='grey', size=11,
                                                             font_family='PPM'),
                                                     self.edit_date
                                                 ], spacing=2
                                             ),
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['born at'], color='grey', size=11,
+                                                    ft.Text(languages[self.lang]['born at'], color='grey', size=11,
                                                             font_family='PPM'),
                                                     self.edit_lieu
                                                 ], spacing=2
@@ -554,14 +554,14 @@ class Students(ft.Container):
                                         controls=[
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['father'], color='grey', size=11,
+                                                    ft.Text(languages[self.lang]['father'], color='grey', size=11,
                                                             font_family='PPM'),
                                                     self.edit_pere
                                                 ], spacing=2
                                             ),
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['mother'], color='grey', size=11,
+                                                    ft.Text(languages[self.lang]['mother'], color='grey', size=11,
                                                             font_family='PPM'),
                                                     self.edit_mere
                                                 ], spacing=2
@@ -573,14 +573,14 @@ class Students(ft.Container):
                                         controls=[
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['contact'], color='grey', size=11,
+                                                    ft.Text(languages[self.lang]['contact'], color='grey', size=11,
                                                             font_family='PPM'),
                                                     self.edit_contact
                                                 ], spacing=2
                                             ),
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['contact 2'], color='grey', size=11,
+                                                    ft.Text(languages[self.lang]['contact 2'], color='grey', size=11,
                                                             font_family='PPM'),
                                                     self.edit_other
                                                 ], spacing=2
@@ -592,14 +592,14 @@ class Students(ft.Container):
                                         controls=[
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['residence'], color='grey', size=11,
+                                                    ft.Text(languages[self.lang]['residence'], color='grey', size=11,
                                                             font_family='PPM'),
                                                     self.edit_residence
                                                 ], spacing=2
                                             ),
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['registration number'], color='grey', size=11,
+                                                    ft.Text(languages[self.lang]['registration number'], color='grey', size=11,
                                                             font_family='PPM'),
                                                     self.edit_mat
                                                 ], spacing=2
@@ -617,7 +617,7 @@ class Students(ft.Container):
                                         padding=10, content=ft.Column(
                                             controls=[
                                                 ft.Row([self.image_button, ]),
-                                                ft.Row([MyButton(languages[lang]['valid'], 'check', 200,
+                                                ft.Row([MyButton(languages[self.lang]['valid'], 'check', 200,
                                                                  self.update_student)]),
                                             ]
                                         )
@@ -632,7 +632,7 @@ class Students(ft.Container):
 
         # Registration window ____________________________________________________________________________________________
         self.ins_class = ft.Dropdown(
-            **drop_style, prefix_icon=ft.Icons.ACCOUNT_BALANCE_OUTLINED, width=200, label=languages[lang]['class'],
+            **drop_style, prefix_icon=ft.Icons.ACCOUNT_BALANCE_OUTLINED, width=200, label=languages[self.lang]['class'],
             on_change=self.changing_class, menu_height=200
         )
         self.unregistered = ft.Dropdown(
@@ -641,7 +641,7 @@ class Students(ft.Container):
         )
         self.ins_mat = ft.TextField(**other_style, prefix_icon=ft.Icons.CREDIT_CARD, width=200, read_only=True)
         self.ins_check = ft.Checkbox(
-            label=languages[lang]['repeater check'], label_style=ft.TextStyle(size=12, font_family="PPI", color='grey'),
+            label=languages[self.lang]['repeater check'], label_style=ft.TextStyle(size=12, font_family="PPI", color='grey'),
             active_color="#f0f0f6", check_color=MAIN_COLOR
         )
         self.ins_fees = ft.TextField(
@@ -649,17 +649,17 @@ class Students(ft.Container):
             text_align=ft.TextAlign.RIGHT, on_blur=self.on_blur_fees
         )
         self.tranche_1 = ft.TextField(
-            **cool_style, width=150, label=languages[lang]['fees part 1'], input_filter=ft.NumbersOnlyInputFilter(),
+            **cool_style, width=150, label=languages[self.lang]['fees part 1'], input_filter=ft.NumbersOnlyInputFilter(),
             prefix_icon=ft.Icons.MONETIZATION_ON_OUTLINED,
             text_align=ft.TextAlign.RIGHT
         )
         self.tranche_2 = ft.TextField(
-            **cool_style, width=150, label=languages[lang]['fees part 2'], input_filter=ft.NumbersOnlyInputFilter(),
+            **cool_style, width=150, label=languages[self.lang]['fees part 2'], input_filter=ft.NumbersOnlyInputFilter(),
             prefix_icon=ft.Icons.MONETIZATION_ON_OUTLINED,
             text_align=ft.TextAlign.RIGHT
         )
         self.tranche_3 = ft.TextField(
-            **cool_style, width=150, label=languages[lang]['fees part 3'], input_filter=ft.NumbersOnlyInputFilter(),
+            **cool_style, width=150, label=languages[self.lang]['fees part 3'], input_filter=ft.NumbersOnlyInputFilter(),
             prefix_icon=ft.Icons.MONETIZATION_ON_OUTLINED,
             text_align=ft.TextAlign.RIGHT
         )
@@ -682,7 +682,7 @@ class Students(ft.Container):
                             border_radius=ft.border_radius.only(top_left=8, top_right=8),
                             content=ft.Row(
                                 controls=[
-                                    ft.Text(languages[lang]['registration'], size=16, font_family='PPB'),
+                                    ft.Text(languages[self.lang]['registration'], size=16, font_family='PPB'),
                                     ft.IconButton('close', icon_color='black87', bgcolor=CT_BGCOLOR, scale=0.7,
                                                   on_click=self.close_ct_registrations),
                                 ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
@@ -697,7 +697,7 @@ class Students(ft.Container):
                                 controls=[
                                     ft.Column(
                                         controls=[
-                                            ft.Text(languages[lang]['name'], size=11, color='grey', font_family='PPM'),
+                                            ft.Text(languages[self.lang]['name'], size=11, color='grey', font_family='PPM'),
                                             self.unregistered
                                         ], spacing=2
                                     ),
@@ -705,14 +705,14 @@ class Students(ft.Container):
                                         controls=[
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['class'], size=11, color='grey',
+                                                    ft.Text(languages[self.lang]['class'], size=11, color='grey',
                                                             font_family='PPM'),
                                                     self.ins_class
                                                 ], spacing=2
                                             ),
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['registration number'], size=11, color='grey',
+                                                    ft.Text(languages[self.lang]['registration number'], size=11, color='grey',
                                                             font_family='PPM'),
                                                     self.ins_mat
                                                 ], spacing=2
@@ -721,7 +721,7 @@ class Students(ft.Container):
                                     ),
                                     ft.Column(
                                         controls=[
-                                            ft.Text(languages[lang]['fees'], size=11, color='grey', font_family='PPM'),
+                                            ft.Text(languages[self.lang]['fees'], size=11, color='grey', font_family='PPM'),
                                             self.ins_fees
                                         ], spacing=2
                                     ),
@@ -731,12 +731,12 @@ class Students(ft.Container):
                                         controls=[
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['school fees'].upper(), size=13,
+                                                    ft.Text(languages[self.lang]['school fees'].upper(), size=13,
                                                             font_family="PPB"),
                                                     ft.Divider(height=1, thickness=1),
                                                 ], spacing=0
                                             ),
-                                            ft.Row([ft.Text(languages[lang]['pay off'], size=12,
+                                            ft.Row([ft.Text(languages[self.lang]['pay off'], size=12,
                                                             font_family="PPM"), self.switch]),
                                             ft.Row([self.tranche_1, self.tranche_2, self.tranche_3,]),
                                             MyButton(
@@ -772,14 +772,14 @@ class Students(ft.Container):
                     ft.Row(
                         controls=[
                             ft.Icon(ft.Icons.REPARTITION_OUTLINED, color='grey', size=18),
-                            ft.Text(languages[lang]['fees part'])
+                            ft.Text(languages[self.lang]['fees part'])
                         ]
                     )
                 ),ft.DataColumn(
                     ft.Row(
                         controls=[
                             ft.Icon(ft.Icons.MONETIZATION_ON_OUTLINED, color='grey', size=18),
-                            ft.Text(languages[lang]['amount'])
+                            ft.Text(languages[self.lang]['amount'])
                         ]
                     )
                 ),
@@ -796,20 +796,20 @@ class Students(ft.Container):
             alignment=ft.alignment.center, padding=5, border_radius=8,
             content=ft.Row([self.status_icon, self.status], spacing=3)
         )
-        self.sc_pay_button = MyButton(languages[lang]['make a payment'], 'monetization_on_outlined', 200, self.make_a_payment)
-        self.pay_print_button = MyButton(languages[lang]['print receipt'], 'print_outlined', 200, None)
+        self.sc_pay_button = MyButton(languages[self.lang]['make a payment'], 'monetization_on_outlined', 200, self.make_a_payment)
+        self.pay_print_button = MyButton(languages[self.lang]['print receipt'], 'print_outlined', 200, None)
         self.sc_tranche_1 = ft.TextField(
-            **other_style, width=150, label=languages[lang]['fees part 1'], input_filter=ft.NumbersOnlyInputFilter(),
+            **other_style, width=150, label=languages[self.lang]['fees part 1'], input_filter=ft.NumbersOnlyInputFilter(),
             prefix_icon=ft.Icons.MONETIZATION_ON_OUTLINED,
             text_align=ft.TextAlign.RIGHT
         )
         self.sc_tranche_2 = ft.TextField(
-            **other_style, width=150, label=languages[lang]['fees part 2'], input_filter=ft.NumbersOnlyInputFilter(),
+            **other_style, width=150, label=languages[self.lang]['fees part 2'], input_filter=ft.NumbersOnlyInputFilter(),
             prefix_icon=ft.Icons.MONETIZATION_ON_OUTLINED,
             text_align=ft.TextAlign.RIGHT
         )
         self.sc_tranche_3 = ft.TextField(
-            **other_style, width=150, label=languages[lang]['fees part 3'], input_filter=ft.NumbersOnlyInputFilter(),
+            **other_style, width=150, label=languages[self.lang]['fees part 3'], input_filter=ft.NumbersOnlyInputFilter(),
             prefix_icon=ft.Icons.MONETIZATION_ON_OUTLINED,
             text_align=ft.TextAlign.RIGHT
         )
@@ -830,6 +830,20 @@ class Students(ft.Container):
                 ft.Row([self.sc_pay_button, self.pay_print_button])
             ]
         )
+        self.sc_second_container = ft.Column(
+            expand=True, alignment=ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            controls=[
+                ft.Column(
+                    controls=[
+                        ft.Text(languages[self.lang]['loading screen'], size=12, font_family='PPM'),
+                        ft.ProgressRing(color=BASE_COLOR)
+                    ],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER
+                )
+            ]
+        )
         self.school_fees_window = ft.Card(
             elevation=50, shape=ft.RoundedRectangleBorder(radius=16),
             scale=ft.Scale(0), animate_scale=ft.Animation(300, ft.AnimationCurve.EASE_IN), expand=True,
@@ -842,7 +856,7 @@ class Students(ft.Container):
                             border_radius=ft.border_radius.only(top_left=8, top_right=8),
                             content=ft.Row(
                                 controls=[
-                                    ft.Text(languages[lang]['school fees'], size=16, font_family='PPB'),
+                                    ft.Text(languages[self.lang]['school fees'], size=16, font_family='PPB'),
                                     ft.IconButton('close', icon_color='black87', bgcolor=CT_BGCOLOR, scale=0.7,
                                                   on_click=self.close_school_fees_window),
                                 ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
@@ -850,62 +864,8 @@ class Students(ft.Container):
                         ),
                         ft.Container(
                             bgcolor="white", padding=20, border=ft.border.only(top=ft.BorderSide(1, CT_BORDER_COLOR)),
-                            border_radius=ft.border_radius.only(bottom_left=8, bottom_right=8), expand=True,
-                            content=ft.Column(
-                                expand=True,
-                                controls=[
-                                    ft.Column(
-                                        expand=True,
-                                        controls=[
-                                            ft.Row(
-                                                controls=[
-                                                    ft.Column(
-                                                        [self.sc_name, self.sc_surname, self.sc_student_id], spacing=0
-                                                    ),
-                                                    self.status_container
-                                                ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
-                                            ),
-                                            ft.Divider(height=1, thickness=1),
-                                            ft.Divider(color=ft.Colors.TRANSPARENT, height=1),
-                                            ft.Row(
-                                                controls=[
-                                                    ft.Column(
-                                                        controls=[
-                                                            ft.Text(languages[lang]["amount paid"], size=12,
-                                                                    font_family='PPI'),
-                                                            self.sc_amount_paid
-                                                        ], horizontal_alignment=ft.CrossAxisAlignment.CENTER
-                                                    ),
-                                                    ft.Column(
-                                                        controls=[
-                                                            ft.Text(languages[lang]["amount expected"], size=12,
-                                                                    font_family='PPI'),
-                                                            self.sc_amount_expected
-                                                        ], horizontal_alignment=ft.CrossAxisAlignment.CENTER
-                                                    ),
-                                                    ft.Column(
-                                                        controls=[
-                                                            ft.Text(languages[lang]["amount due"], size=12,
-                                                                    font_family='PPI'),
-                                                            self.sc_amount_due
-                                                        ], horizontal_alignment=ft.CrossAxisAlignment.CENTER
-                                                    )
-                                                ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
-                                            ),
-                                            ft.Divider(color=ft.Colors.TRANSPARENT, height=1),
-                                            ft.Divider(height=1, thickness=1),
-                                            ft.Divider(color=ft.Colors.TRANSPARENT, height=1),
-                                            ft.Text(languages[lang]['payment history'], size=13,
-                                                    font_family='PPB'),
-                                            ft.ListView(expand=True, height=200,
-                                                        controls=[self.sc_payment_table]),
-                                            ft.Divider(height=1, thickness=1),
-                                            ft.Divider(color=ft.Colors.TRANSPARENT, height=1),
-                                        ]
-                                    ),
-                                    self.payment_container
-                                ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
-                            )
+                            border_radius=ft.border_radius.only(bottom_left=8, bottom_right=8), expand=True, width=600,
+                            content=self.sc_second_container
                         )
                     ], spacing=0
                 )
@@ -915,7 +875,7 @@ class Students(ft.Container):
         # Discipline window...
         self.dis_student = ft.Dropdown(
             **drop_style, prefix_icon='person_outlined', width=300, menu_height=200,
-            options=[ft.dropdown.Option(key=' ', text=languages[lang]['select option'])]
+            options=[ft.dropdown.Option(key=' ', text=languages[self.lang]['select option'])]
         )
         self.dis_sequence = ft.TextField(
             **cool_style, width=170, prefix_icon=ft.Icons.CALENDAR_MONTH_OUTLINED,
@@ -927,14 +887,14 @@ class Students(ft.Container):
                 ft.dropdown.Option(
                     key=choice['key'], text=choice['text']
                 ) for choice in [
-                    {'key': ' ', 'text': languages[lang]['select option']},
-                    {'key': 'ban', 'text': languages[lang]['ban']},
-                    {'key': 'justified absence', 'text': languages[lang]['justified absence']},
-                    {'key': 'late', 'text': languages[lang]['late']},
-                    {'key': 'permanent ban', 'text': languages[lang]['permanent ban']},
-                    {'key': 'reprimand', 'text': languages[lang]['reprimand']},
-                    {'key': 'unjustified absence', 'text': languages[lang]['unjustified absence']},
-                    {'key': 'warning', 'text': languages[lang]['warning']},
+                    {'key': ' ', 'text': languages[self.lang]['select option']},
+                    {'key': 'ban', 'text': languages[self.lang]['ban']},
+                    {'key': 'justified absence', 'text': languages[self.lang]['justified absence']},
+                    {'key': 'late', 'text': languages[self.lang]['late']},
+                    {'key': 'permanent ban', 'text': languages[self.lang]['permanent ban']},
+                    {'key': 'reprimand', 'text': languages[self.lang]['reprimand']},
+                    {'key': 'unjustified absence', 'text': languages[self.lang]['unjustified absence']},
+                    {'key': 'warning', 'text': languages[self.lang]['warning']},
                 ]
             ]
         )
@@ -973,7 +933,7 @@ class Students(ft.Container):
                                 controls=[
                                     ft.Column(
                                         controls=[
-                                            ft.Text(languages[lang]['student'], size=11, font_family='PPM', color='grey'),
+                                            ft.Text(languages[self.lang]['student'], size=11, font_family='PPM', color='grey'),
                                             self.dis_student
                                         ], spacing=2
                                     ),
@@ -988,14 +948,14 @@ class Students(ft.Container):
                                         controls=[
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['sequence'], size=11, font_family='PPM',
+                                                    ft.Text(languages[self.lang]['sequence'], size=11, font_family='PPM',
                                                             color='grey'),
                                                     self.dis_sequence
                                                 ], spacing=2
                                             ),
                                             ft.Column(
                                                 controls=[
-                                                    ft.Text(languages[lang]['quantity'], size=11, font_family='PPM',
+                                                    ft.Text(languages[self.lang]['quantity'], size=11, font_family='PPM',
                                                             color='grey'),
                                                     self.dis_qty
                                                 ], spacing=2
@@ -1004,14 +964,14 @@ class Students(ft.Container):
                                     ),
                                     ft.Column(
                                         controls=[
-                                            ft.Text(languages[lang]['comment'], size=11, font_family='PPM',
+                                            ft.Text(languages[self.lang]['comment'], size=11, font_family='PPM',
                                                     color='grey'),
                                             self.dis_comment
                                         ], spacing=2
                                     ),
                                     ft.Container(
                                         padding=10, content=MyButton(
-                                            languages[lang]['valid'], 'check_circle', 200,
+                                            languages[self.lang]['valid'], 'check_circle', 200,
                                             self.create_new_sanction
                                         )
                                     )
@@ -1027,11 +987,86 @@ class Students(ft.Container):
         self.content = ft.Stack(
             expand=True,
             controls=[
-                self.main_window, self.ct_new_student, self.ct_edit_student,
-                self.ct_registration, self.school_fees_window, self.discipline_window
+                ft.Column(
+                    controls=[
+                        ft.Text(languages[self.lang]['loading screen'], size=12, font_family='PPM'),
+                        ft.ProgressRing(color=BASE_COLOR)
+                    ],
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    alignment=ft.MainAxisAlignment.CENTER
+                )
             ], alignment=ft.alignment.center
         )
         self.on_mount()
+
+    async def build_main_view(self):
+        self.content.controls.clear()
+
+        for widget in [
+            self.main_window, self.ct_new_student, self.ct_edit_student,
+            self.ct_registration, self.school_fees_window, self.discipline_window
+        ]:
+            self.content.controls.append(widget)
+
+        self.cp.page.update()
+
+    async def build_school_fees_container(self):
+        self.sc_second_container.controls.clear()
+        self.sc_second_container.controls = [
+            ft.Column(
+                expand=True,
+                controls=[
+                    ft.Row(
+                        controls=[
+                            ft.Column(
+                                [self.sc_name, self.sc_surname, self.sc_student_id], spacing=0
+                            ),
+                            self.status_container
+                        ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                    ),
+                    ft.Divider(height=1, thickness=1),
+                    ft.Divider(color=ft.Colors.TRANSPARENT, height=1),
+                    ft.Row(
+                        controls=[
+                            ft.Column(
+                                controls=[
+                                    ft.Text(languages[self.lang]["amount paid"], size=12,
+                                            font_family='PPI'),
+                                    self.sc_amount_paid
+                                ], horizontal_alignment=ft.CrossAxisAlignment.CENTER
+                            ),
+                            ft.Column(
+                                controls=[
+                                    ft.Text(languages[self.lang]["amount expected"], size=12,
+                                            font_family='PPI'),
+                                    self.sc_amount_expected
+                                ], horizontal_alignment=ft.CrossAxisAlignment.CENTER
+                            ),
+                            ft.Column(
+                                controls=[
+                                    ft.Text(languages[self.lang]["amount due"], size=12,
+                                            font_family='PPI'),
+                                    self.sc_amount_due
+                                ], horizontal_alignment=ft.CrossAxisAlignment.CENTER
+                            )
+                        ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                    ),
+                    ft.Divider(color=ft.Colors.TRANSPARENT, height=1),
+                    ft.Divider(height=1, thickness=1),
+                    ft.Divider(color=ft.Colors.TRANSPARENT, height=1),
+                    ft.Text(languages[self.lang]['payment history'], size=13,
+                            font_family='PPB'),
+                    ft.ListView(expand=True, height=200,
+                                controls=[self.sc_payment_table]),
+                    ft.Divider(height=1, thickness=1),
+                    ft.Divider(color=ft.Colors.TRANSPARENT, height=1),
+                ]
+            ),
+            self.payment_container
+        ]
+        self.sc_second_container.alignment = ft.MainAxisAlignment.CENTER
+        self.sc_second_container.horizontal_alignment = None
+        self.cp.page.update()
 
     def hide_one_window(self, window_to_hide: object):
         """
@@ -1180,8 +1215,7 @@ class Students(ft.Container):
                 ),
             )
 
-        self.table.update()
-
+        await self.build_main_view()
         self.boys.value = boys
         self.girls.value = girls
         self.registered_count.value = len(details)
@@ -1424,7 +1458,6 @@ class Students(ft.Container):
             widget.update()
 
         self.show_one_window( self.ct_edit_student)
-
 
     def set_image_url(self, e):
         if e.files:
@@ -1740,14 +1773,27 @@ class Students(ft.Container):
                 )
             )
 
-        self.sc_payment_table.update()
-        self.cp.page.update()
+        await self.build_school_fees_container()
 
     def open_school_fees_window(self, e):
         self.run_async_in_thread(self.load_fees_widgets(e))
 
     def close_school_fees_window(self, e):
         self.hide_one_window(self.school_fees_window)
+        self.sc_second_container.controls.clear()
+        self.sc_second_container.controls = [
+            ft.Column(
+                controls=[
+                    ft.Text(languages[self.lang]['loading screen'], size=12, font_family='PPM'),
+                    ft.ProgressRing(color=BASE_COLOR)
+                ], alignment = ft.MainAxisAlignment.CENTER,
+                horizontal_alignment = ft.CrossAxisAlignment.CENTER
+
+            )
+        ]
+        self.sc_second_container.alignment = ft.MainAxisAlignment.CENTER
+        self.sc_second_container.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+        self.cp.page.update()
 
     def make_a_payment(self, e):
         role = self.cp.page.client_storage.get('role')
