@@ -53,3 +53,9 @@ def get_rating(my_note: float):
 
     return rating
 
+
+def write_number(n):
+    if n == int(n):
+        return int(n)
+    else:
+        return f"{n:.2f}"
