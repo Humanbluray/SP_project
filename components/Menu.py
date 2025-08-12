@@ -131,16 +131,16 @@ class NavBar(ft.Container):
         if e.control.name.value.lower() == languages['en']['menu students'].lower() or e.control.name.value.lower() == languages['fr']['menu students'].lower():
             self.cp.my_content.controls.append(Students(self.cp))
 
-        elif e.control.name.value == languages['en']['menu classes'] or e.control.name.value == languages['fr']['menu classes']:
+        elif e.control.name.value.lower() == languages['en']['menu classes'].lower() or e.control.name.value.lower() == languages['fr']['menu classes'].lower():
             self.cp.my_content.controls.append(Classes(self.cp))
 
-        elif e.control.name.value == languages['en']['menu teachers'] or e.control.name.value == languages['fr']['menu teachers']:
+        elif e.control.name.value.lower() == languages['en']['menu teachers'].lower() or e.control.name.value.lower() == languages['fr']['menu teachers'].lower():
             self.cp.my_content.controls.append(Teachers(self.cp))
 
-        elif e.control.name.value == languages['en']['menu school fees'] or e.control.name.value == languages['fr']['menu school fees']:
+        elif e.control.name.value.lower() == languages['en']['menu school fees'].lower() or e.control.name.value.lower() == languages['fr']['menu school fees'].lower():
             self.cp.my_content.controls.append(SchoolFees(self.cp))
 
-        elif e.control.name.value == languages['en']['menu notes'] or e.control.name.value == languages['fr']['menu notes']:
+        elif e.control.name.value.lower() == languages['en']['menu notes'].lower() or e.control.name.value.lower() == languages['fr']['menu notes'].lower():
             self.cp.my_content.controls.append(Notes(self.cp))
 
         elif e.control.name.value.lower() in [languages['en']['menu time table'].lower(), languages['fr']['menu time table'].lower()]:
