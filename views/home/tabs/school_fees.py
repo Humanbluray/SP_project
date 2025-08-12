@@ -306,6 +306,8 @@ class SchoolFees(ft.Container):
         access_token = self.cp.page.client_storage.get("access_token")
         all_classes = await get_all_classes_basic_info(access_token)
 
+        print(all_classes)
+
         for one_classe in all_classes:
             self.search_class.options.append(
                 ft.dropdown.Option(
@@ -318,7 +320,7 @@ class SchoolFees(ft.Container):
     async def filter_datas(self, e):
         access_token = self.cp.page.client_storage.get("access_token")
 
-        # cas du raport global...
+        # cas du rapport global...
         if self.search_tranche.value == 'tout':
 
             # si le champs classe est vide...
