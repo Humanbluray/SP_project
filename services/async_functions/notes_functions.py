@@ -466,7 +466,26 @@ async def insert_note(access_token: str, note_data: dict) -> bool:
             return False
 
 
+async def get_statistics_by_class_subject(access_token: str, year_id: str, classe_id: str, sequence_id: str):
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            f"{url}/rest/v1/notes_detailed",
+            params={
+                "year_id": f"eq.{year_id}",
+                "classe_id": f"eq.{classe_id}",
+                "sequence_id": f"eq.{sequence_id}",
+                "select": "*"  # tous les champs
+            },
+            headers={
+                "apikey": key,
+                "Authorization": f"Bearer {access_token}"
+            }
+        )
 
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise Exception(f"Erreur {response.status_code}: {response.text}")
 
 
 
