@@ -181,7 +181,7 @@ class Home(ft.View):
             ft.Column(
                 controls=[
                     ft.Text(languages[language]['loading screen'], size=12, font_family="PPM", color="grey"),
-                    ft.ProgressRing(color=BASE_COLOR, scale=2)
+                    ft.ProgressRing(color=BASE_COLOR)
                 ]
             )
         ]

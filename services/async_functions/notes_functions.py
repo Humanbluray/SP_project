@@ -466,28 +466,45 @@ async def insert_note(access_token: str, note_data: dict) -> bool:
             return False
 
 
-async def get_statistics_by_class_subject(access_token: str, year_id: str, classe_id: str, sequence_id: str):
+async def get_statistics_by_class_subject(
+    access_token: str, year_id: str, class_id: str, subject_id: str, sequence: str
+):
+    """
+
+    :param access_token:
+    :param year_id:
+    :param class_id:
+    :param subject_id:
+    :param sequence:
+    :return:
+    """
+    query_url = f"{url}/rest/v1/vw_subject_class_sequence_stats"
+    params = {
+        "year_id": f"eq.{year_id}",
+        "class_id": f"eq.{class_id}",
+        "subject_id": f"eq.{subject_id}",
+        "sequence": f"eq.{sequence}",
+        "select": "*",  # tous les champs
+        "limit": 1
+    }
+    headers = {
+        "apikey": key,
+        "Authorization": f"Bearer {access_token}"
+    }
+
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            f"{url}/rest/v1/notes_detailed",
-            params={
-                "year_id": f"eq.{year_id}",
-                "classe_id": f"eq.{classe_id}",
-                "sequence_id": f"eq.{sequence_id}",
-                "select": "*"  # tous les champs
-            },
-            headers={
-                "apikey": key,
-                "Authorization": f"Bearer {access_token}"
-            }
+            url=query_url, params=params, headers=headers
         )
 
-        if response.status_code == 200:
-            return response.json()
+    if response.status_code == 200:
+        data = response.json()
+        if data:
+            return data[0]  # retourne le premier et unique résultat
         else:
-            raise Exception(f"Erreur {response.status_code}: {response.text}")
-
-
+            raise Exception("Aucun résultat trouvé")
+    else:
+        raise Exception(f"Erreur {response.status_code}: {response.text}")
 
 
 

@@ -188,7 +188,7 @@ class Notes(ft.Container):
                                                     ColoredButton(
                                                         languages[lang]['stats by class'],
                                                         ft.Icons.AREA_CHART,
-                                                        self.open_export_xls_window
+                                                        self.open_statistics_window
                                                     )
                                                 ]
                                             )
@@ -752,11 +752,166 @@ class Notes(ft.Container):
             )
         )
 
+        # statistics window ________________
+        self.stats_class = ft.Dropdown(
+            **drop_style, prefix_icon='roofing', label=languages[lang]['class'], options=[
+                ft.dropdown.Option(key=' ', text=languages[lang]['select option'])
+            ], value=' ', on_change=self.on_stats_class_change, width=200, menu_height=200
+        )
+        self.stats_subject = ft.Dropdown(
+            **drop_style, prefix_icon='book_outlined', label=languages[lang]['subject'], options=[
+                ft.dropdown.Option(key=' ', text=languages[lang]['select option'])
+            ], value=' ', on_change=self.on_stats_subject_change, width=400, menu_height=200
+        )
+        self.stats_sequence = ft.Dropdown(
+            **drop_style,
+            prefix_icon=ft.Icons.BOOK_OUTLINED, width=200, menu_height=200,
+            options=[
+                ft.dropdown.Option(
+                    key='sequence 1', text=f"{languages[lang]['sequence 1']}"
+                ),
+                ft.dropdown.Option(
+                    key='sequence 2', text=f"{languages[lang]['sequence 2']}"
+                ), ft.dropdown.Option(
+                    key='sequence 3', text=f"{languages[lang]['sequence 3']}"
+                ), ft.dropdown.Option(
+                    key='sequence 4', text=f"{languages[lang]['sequence 4']}"
+                ),
+                ft.dropdown.Option(
+                    key='sequence 5', text=f"{languages[lang]['sequence 5']}"
+                ), ft.dropdown.Option(
+                    key='sequence 6', text=f"{languages[lang]['sequence 6']}"
+                ),
+                ft.dropdown.Option(
+                    key=' ', text=f"{languages[lang]['select option']}"
+                )
+            ], value=' '
+        )
+        self.stats_success_rate = ft.Text('-', size=16, font_family='PPM')
+        self.stats_nb_students = ft.Text('-', size=16, font_family='PPM')
+        self.stats_nb_success = ft.Text('-', size=16, font_family='PPM')
+        self.stats_nb_boys_success = ft.Text('-', size=16, font_family='PPM')
+        self.stats_nb_girls_success = ft.Text('-', size=16, font_family='PPM')
+
+
+        self.statistics_window = ft.Card(
+            elevation=50, shape=ft.RoundedRectangleBorder(radius=16),
+            scale=ft.Scale(0), animate_scale=ft.Animation(300, ft.AnimationCurve.EASE_IN),
+            content=ft.Container(
+                bgcolor=CT_BGCOLOR, padding=0, border_radius=16, width=450, height=500,
+                content=ft.Column(
+                    controls=[
+                        ft.Container(
+                            bgcolor="white", padding=20,
+                            border=ft.border.only(bottom=ft.BorderSide(1, CT_BORDER_COLOR)),
+                            border_radius=ft.border_radius.only(top_left=8, top_right=8),
+                            content=ft.Row(
+                                controls=[
+                                    ft.Text(languages[lang]['statistics window'], size=16, font_family='PPB'),
+                                    ft.IconButton(
+                                        'close', icon_color='black87', bgcolor=CT_BGCOLOR, scale=0.7,
+                                        on_click=self.close_statistics_window
+                                    ),
+                                ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                            )
+                        ),
+                        ft.Container(
+                            bgcolor="white", padding=20, border=ft.border.only(top=ft.BorderSide(1, CT_BORDER_COLOR)),
+                            border_radius=ft.border_radius.only(bottom_left=8, bottom_right=8), expand=True,
+                            content=ft.Column(
+                                expand=True, spacing=10, controls=[
+                                    ft.Row([self.stats_class, self.stats_sequence]),
+                                    self.stats_subject,
+                                    ft.Divider(height=1, color=ft.Colors.TRANSPARENT),
+                                    ft.Column(
+                                        controls=[
+                                            ft.Row(
+                                                controls=[
+                                                    ft.Text(languages[lang]['statistics'], size=13, font_family='PPB'),
+                                                    ft.Icon(ft.Icons.DATASET, size=20, color='black'),
+                                                ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                                            ),
+                                            ft.Divider(height=1, thickness=1),
+                                        ], spacing=0
+                                    ),
+                                    ft.Row(
+                                        controls=[
+                                            ft.Row(
+                                                controls=[
+                                                    ft.Icon(ft.Icons.GROUP_OUTLINED, size=16, color='black'),
+                                                    ft.Text(languages[lang]['nb students'].upper(), size=12,
+                                                            font_family='PPM'),
+                                                ]
+                                            ),
+                                            self.stats_nb_students
+                                        ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                                    ),
+                                    ft.Divider(height=1, thickness=1),
+                                    ft.Row(
+                                        controls=[
+                                            ft.Row(
+                                                controls=[
+                                                    ft.Icon(ft.Icons.BAR_CHART_OUTLINED, size=16, color='black'),
+                                                    ft.Text(languages[lang]['nb > 10'].upper(), size=12,
+                                                            font_family='PPM')
+                                                ]
+                                            ),
+                                            self.stats_nb_success
+                                        ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                                    ),
+                                    ft.Divider(height=1, thickness=1),
+                                    ft.Row(
+                                        controls=[
+                                            ft.Row(
+                                                controls=[
+                                                    ft.Icon(ft.Icons.PIE_CHART_OUTLINE_OUTLINED, size=16, color='black'),
+                                                    ft.Text(languages[lang]['success rate'].upper(), size=12,
+                                                            font_family='PPM'),
+                                                ]
+                                            ),
+                                            self.stats_success_rate
+                                        ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                                    ),
+                                    ft.Divider(height=1, thickness=1),
+                                    ft.Row(
+                                        controls=[
+                                            ft.Row(
+                                                controls=[
+                                                    ft.Icon(ft.Icons.MAN_OUTLINED, size=16, color='blue'),
+                                                    ft.Text(languages[lang]['boys > 10'].upper(), size=12,
+                                                            font_family='PPM'),
+                                                ]
+                                            ),
+                                            self.stats_nb_boys_success
+                                        ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                                    ),
+                                    ft.Divider(height=1, thickness=1),
+                                    ft.Row(
+                                        controls=[
+                                            ft.Row(
+                                                controls=[
+                                                    ft.Icon(ft.Icons.WOMAN_OUTLINED, size=16, color='pink'),
+                                                    ft.Text(languages[lang]['girls > 10'].upper(), size=12,
+                                                            font_family='PPM'),
+                                                ]
+                                            ),
+                                            self.stats_nb_girls_success
+                                        ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+                                    ),
+
+                                ]
+                            )
+                        )
+                    ], spacing=0
+                )
+            )
+        )
+
         self.content = ft.Stack(
             expand=True,
             controls=[
                 self.main_window, self.filter_window, self.new_note_window, self.edit_note_window,
-                self.export_xls_window, self.import_window
+                self.export_xls_window, self.import_window, self.statistics_window
             ], alignment=ft.alignment.center
         )
         self.on_mount()
@@ -1454,11 +1609,83 @@ class Notes(ft.Container):
     def close_import_window(self, e):
         self.hide_one_window(self.import_window)
 
+    async def load_statistics_datas(self, e):
+        access_token = self.cp.page.client_storage.get('access_token')
+        all_classes  = await get_all_classes_basic_info(access_token)
 
+        for item in all_classes:
+            self.stats_class.options.append(
+                ft.dropdown.Option(
+                    key=item['id'], text=item['code']
+                )
+            )
 
+        self.show_one_window(self.statistics_window)
 
+    def open_statistics_window(self, e):
+        self.run_async_in_thread(self.load_statistics_datas(e))
 
+    def close_statistics_window(self, e):
+        self.stats_class.options.clear()
+        self.stats_class.options.append(
+            ft.dropdown.Option(
+                key=' ', text=languages[self.lang]['select option']
+            )
+        )
+        self.stats_class.value = ' '
+        self.stats_subject.options.clear()
+        self.stats_subject.options.append(
+            ft.dropdown.Option(
+                key=' ', text=languages[self.lang]['select option']
+            )
+        )
+        self.stats_subject.value = ' '
+        self.stats_nb_students.value = '-'
+        self.stats_success_rate.value = '-'
+        self.stats_nb_success.value = '-'
+        self.stats_nb_girls_success.value = '-'
+        self.stats_nb_boys_success.value = '-'
+        self.hide_one_window(self.statistics_window)
 
+    async def load_stats_subject(self, e):
+        access_token = self.cp.page.client_storage.get('access_token')
+        subjects = await get_subjects_by_class_id(access_token, self.stats_class.value)
+
+        self.stats_subject.options.clear()
+        self.stats_subject.options.append(
+            ft.dropdown.Option(
+                key=' ', text=languages[self.lang]['select option']
+            )
+        )
+        for item in subjects:
+            self.stats_subject.options.append(
+                ft.dropdown.Option(
+                    key=item['subject_id'], text=item['subject_name'].upper()
+                )
+            )
+
+        self.cp.page.update()
+
+    def on_stats_class_change(self, e):
+        self.run_async_in_thread(self.load_stats_subject(e))
+
+    async def load_all_statistics(self, e):
+        access_token = self.cp.page.client_storage.get('access_token')
+        year_id = self.cp.year_id
+
+        stats = await get_statistics_by_class_subject(
+            access_token, year_id, self.stats_class.value, self.stats_subject.value, self.stats_sequence.value
+        )
+        print(stats)
+        self.stats_nb_students.value = stats['total_notes']
+        self.stats_success_rate.value = f"{stats['success_rate_percent']:.2f} %"
+        self.stats_nb_success.value = stats['notes_ge_10']
+        self.stats_nb_girls_success.value = stats['girls_above_10']
+        self.stats_nb_boys_success.value = stats['boys_above_10']
+        self.cp.page.update()
+
+    def on_stats_subject_change(self, e):
+        self.run_async_in_thread(self.load_all_statistics(e))
 
 
 

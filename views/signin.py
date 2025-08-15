@@ -60,46 +60,58 @@ class Signin(ft.View):
                     ft.Card(
                         elevation=10, shape=ft.RoundedRectangleBorder(radius=24),
                         content=ft.Container(
-                            padding=20, alignment=ft.alignment.center, bgcolor='white', width=400,
+                            padding=0, alignment=ft.alignment.center, bgcolor='white', width=800,
                             border_radius=24,
-                            content=ft.Column(
+                            content=ft.Row(
                                 controls=[
-                                    ft.Image(src='/pictures/logo.png', width=200, height=200),
                                     ft.Container(
-                                        padding=20, content=ft.Column(
-                                            controls=[
-                                                ft.Row(
-                                                    controls=[
-                                                        self.login_text,
-                                                    ], alignment=ft.MainAxisAlignment.CENTER
-                                                ),
-                                                ft.Divider(height=1, color=ft.Colors.TRANSPARENT),
-                                                ft.Column(
-                                                    spacing=2, controls=[
-                                                        ft.Text(languages[self.lang_button.value]['email'], size=11,
-                                                                font_family='PPM', color='grey'),
-                                                        self.email,
-                                                    ]
-                                                ),
-                                                ft.Column(
-                                                    spacing=2, controls=[
-                                                        self.header_password,
-                                                        self.password,
-                                                    ]
-                                                ),
-                                                self.connect_button,
-                                                ft.Row(
-                                                    controls=[
-                                                        self.choose_text,
-                                                        self.lang_button
-                                                    ], spacing=0, alignment=ft.MainAxisAlignment.CENTER
-                                                ),
-                                            ]
-                                        )
+                                        expand=True, alignment=ft.alignment.center, bgcolor=SECOND_COLOR, padding=0,
+                                        content=ft.Image(src='/pictures/logo complet.png', width=400, height=400),
                                     ),
-                                    ft.Text("")
-                                ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=0
+                                    ft.Container(
+                                        width=350, padding=20,
+                                        content=ft.Column(
+                                            controls=[
 
+                                                ft.Container(
+                                                    padding=20, content=ft.Column(
+                                                        controls=[
+                                                            ft.Row(
+                                                                controls=[
+                                                                    self.login_text,
+                                                                ], alignment=ft.MainAxisAlignment.CENTER
+                                                            ),
+                                                            ft.Divider(height=1, color=ft.Colors.TRANSPARENT),
+                                                            ft.Column(
+                                                                spacing=2, controls=[
+                                                                    ft.Text(languages[self.lang_button.value]['email'],
+                                                                            size=11,
+                                                                            font_family='PPM', color='grey'),
+                                                                    self.email,
+                                                                ]
+                                                            ),
+                                                            ft.Column(
+                                                                spacing=2, controls=[
+                                                                    self.header_password,
+                                                                    self.password,
+                                                                ]
+                                                            ),
+                                                            self.connect_button,
+                                                            ft.Row(
+                                                                controls=[
+                                                                    self.choose_text,
+                                                                    self.lang_button
+                                                                ], spacing=0, alignment=ft.MainAxisAlignment.CENTER
+                                                            ),
+                                                        ]
+                                                    )
+                                                ),
+                                                ft.Text("")
+                                            ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=0
+
+                                        )
+                                    )
+                                ]
                             )
                         )
                     )
